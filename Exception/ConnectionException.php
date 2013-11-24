@@ -1,6 +1,6 @@
 <?php
 /**
- * Log Exception
+ * Connection Exception
  *
  * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
@@ -8,18 +8,18 @@
  */
 namespace Exception\Log;
 
-use RuntimeException;
-
+use Exception;
 use CommonApi\Log\ExceptionInterface;
 
 /**
- * Log Exception
+ * Connection Exception
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class LogException extends RuntimeException implements ExceptionInterface
+class ConnectionException extends Exception implements ExceptionInterface
 {
+
 }

@@ -1,27 +1,22 @@
 <?php
 /**
- * Echo Logger
+ * Callback Logger
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Log\Type;
 
-defined('MOLAJO') or die;
-
-use stdClass;
-
-
 /**
- * Echo Logger
+ * Callback Logger
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @since     1.0
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @since      1.0
  */
-class EchoLogger extends AbstractLogger
+class Callback extends AbstractHandler
 {
     /**
      * Constructor
@@ -34,9 +29,6 @@ class EchoLogger extends AbstractLogger
     public function __construct(
         $context = array()
     ) {
-
-        parent::__construct($context);
-
         return $this;
     }
 
@@ -65,12 +57,6 @@ class EchoLogger extends AbstractLogger
      */
     public function log($level, $message, array $context = array())
     {
-        $log_entry = parent::log($level, $message, $context);
-
-        echo '<pre>';
-        var_dump($log_entry);
-        echo '</pre>';
-
         return $this;
     }
 }

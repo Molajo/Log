@@ -2,23 +2,21 @@
 /**
  * Log Test
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Log\Test;
-
-defined('MOLAJO') or die;
 
 use DateTime;
 
 /**
  * Log Test
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class LogTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,12 +30,12 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $name = 'Test1';
+        $name        = 'Test1';
         $logger_type = 'Dummy';
-        $levels = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $context = array();
+        $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $context     = array();
 
-        $class = 'Molajo\\Log\\Adapter';
+        $class     = 'Molajo\\Log\\Adapter';
         $this->log = new $class($name, $logger_type, $levels, $context);
 
         return;
@@ -48,7 +46,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter::__construct
      */
-    public function testStartLoggerFromConstruct ()
+    public function testStartLoggerFromConstruct()
     {
         $loggers = $this->log->getLoggers();
 
@@ -61,12 +59,12 @@ class LogTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter::startLogger
      */
-    public function testStartLoggerNormally ()
+    public function testStartLoggerNormally()
     {
-        $name = 'Test2';
+        $name        = 'Test2';
         $logger_type = 'Echo';
-        $levels = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $context = array();
+        $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $context     = array();
 
         $this->log->startLogger($name, $logger_type, $levels, $context);
 
@@ -81,13 +79,12 @@ class LogTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter::startLogger
      */
-    public function testGetLoggers ()
+    public function testGetLoggers()
     {
         $loggers = $this->log->getLoggers();
 
         $this->assertEquals(1, count($loggers));
         $this->assertTrue(isset($loggers['test1']));
-
     }
 
     /**
@@ -95,7 +92,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter::stopLogger
      */
-    public function testStopLogger ()
+    public function testStopLogger()
     {
         $this->log->stopLogger('Test1');
 
@@ -110,7 +107,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter::stopLogger
      */
-    public function testSetTimezone ()
+    public function testSetTimezone()
     {
         $this->log->setTimezone('America/Chicago');
         $results = $this->log->getTimezone();
@@ -123,6 +120,5 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-
     }
 }

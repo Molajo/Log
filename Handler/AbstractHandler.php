@@ -2,25 +2,23 @@
 /**
  * Abstract Logger
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Log\Type;
-
-defined('MOLAJO') or die;
 
 use stdClass;
 
 /**
  * Abstract Logger
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @since     1.0
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @since      1.0
  */
-abstract class AbstractLogger
+abstract class AbstractHandler
 {
     /**
      * Context
@@ -282,7 +280,6 @@ abstract class AbstractLogger
 
         if ($this->memory > $this->previous_memory) {
             $this->memory_difference = $this->memory - $this->previous_memory;
-
         } else {
             $this->memory_difference = 0;
         }

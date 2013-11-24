@@ -2,23 +2,21 @@
 /**
  * Log Test
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Log\Test;
-
-defined('MOLAJO') or die;
 
 use DateTime;
 
 /**
  * Log Test
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class DummyTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,12 +30,12 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $name = 'Test1';
+        $name        = 'Test1';
         $logger_type = 'Dummy';
-        $levels = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $context = array();
+        $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $context     = array();
 
-        $class = 'Molajo\\Log\\Adapter';
+        $class     = 'Molajo\\Log\\Adapter';
         $this->log = new $class($name, $logger_type, $levels, $context);
 
         return;
@@ -48,7 +46,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter::__construct
      */
-    public function testStartLoggerFromConstruct ()
+    public function testStartLoggerFromConstruct()
     {
         $loggers = $this->log->getLoggers();
 
@@ -63,7 +61,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmergency()
     {
-        $level = 600;
+        $level   = 600;
         $message = 'Hello';
         $context = array();
 
@@ -79,7 +77,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testAlert()
     {
-        $level = 550;
+        $level   = 550;
         $message = 'Hello';
         $context = array();
 
@@ -95,7 +93,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testCritical()
     {
-        $level = 550;
+        $level   = 550;
         $message = 'Hello';
         $context = array();
 
@@ -111,7 +109,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testError()
     {
-        $level = 400;
+        $level   = 400;
         $message = 'Hello';
         $context = array();
 
@@ -127,7 +125,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testWarning()
     {
-        $level = 300;
+        $level   = 300;
         $message = 'Hello';
         $context = array();
 
@@ -143,7 +141,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testNotice()
     {
-        $level = 250;
+        $level   = 250;
         $message = 'Hello';
         $context = array();
 
@@ -159,7 +157,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function testInfo()
     {
-        $level = 200;
+        $level   = 200;
         $message = 'Hello';
         $context = array();
 
@@ -175,7 +173,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function debugInfo()
     {
-        $level = 100;
+        $level   = 100;
         $message = 'Hello';
         $context = array();
 
@@ -191,7 +189,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     public function log()
     {
-        $level = 200;
+        $level   = 200;
         $message = 'Hello';
         $context = array();
 
@@ -206,6 +204,5 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-
     }
 }

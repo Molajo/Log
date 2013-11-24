@@ -1,29 +1,29 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ * Adapter for Log
+ *
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Log;
 
-defined('MOLAJO') or die;
-
 use Exception;
-use DateTime;
-use Molajo\Log\Exception\LogException;
-use Molajo\Log\Api\AdapterInterface;
+use Exception\Log\AdapterException;
+use CommonApi\Log\LoggerInterface;
 
 /**
- * Log
+ * Adapter for Log
  *
- * @package     Molajo
- * @subpackage  Service
- * @since       1.0
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @since      1.0
  */
-class Adapter implements AdapterInterface
+class Adapter implements LoggerInterface
 {
     /**
-     * Log Levels
+     * Log levels
      *
      * @var    array
      * @since  1.0
@@ -136,22 +136,61 @@ class Adapter implements AdapterInterface
     protected $timezone = '';
 
     /**
+     * Log Adapter Handler
+     *
+     * @var     object
+     * @since   1.0
+     */
+    public $adapterHandler;
+
+    /**
      * Constructor
      *
-     * @param   string $name
-     * @param   string $logger_type
-     * @param   array  $levels
-     * @param   array  $context
+     * @param   LoggerInterface $log
+     * @param   string          $name
+     * @param   string          $logger_type
+     * @param   array           $levels
+     * @param   array           $context
      *
      * @since   1.0
      */
-    public function __construct($name = '', $logger_type = '', $levels = array(), $context = array())
-    {
+    public function __construct(
+        LoggerInterface $log,
+        $name = '',
+        $logger_type = '',
+        $levels = array(),
+        $context = array()
+    ) {
         $this->setDefaultTimezone();
+
+        $this->adapterHandler = $log;
 
         if ($name == '') {
         } else {
             $this->startLogger($name, $logger_type, $levels, $context);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Connect to the Log Adapter Handler
+     *
+     * @param   array $options
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  AdapterException
+     * @api
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        try {
+            $this->adapterHandler->setLogger($options);
+        } catch (Exception $e) {
+
+            throw new AdapterException
+            ('Log: Caught Exception: ' . $e->getMessage());
         }
 
         return $this;
@@ -166,7 +205,7 @@ class Adapter implements AdapterInterface
      * @param   array  $context
      *
      * @return  $this
-     * @throws  LogException
+     * @throws  AdapterException
      * @since   1.0
      */
     public function startLogger($name, $logger_type = 'echo', $levels = array(), $context = array())
@@ -248,12 +287,12 @@ class Adapter implements AdapterInterface
                     break;
 
                 default:
-                    throw new LogException
+                    throw new AdapterException
                     ('Log startLogger: Logger Level is Invalid: ' . $level);
             }
         }
 
-        $loggerClass          = 'Molajo\\Log\\Type\\' . ucfirst(strtolower($logger_type)) . 'Logger';
+        $loggerClass          = 'Molajo\\Log\\Handler\\' . ucfirst(strtolower($logger_type)) . 'Logger';
         $loggerInstance       = new $loggerClass($context);
         $this->loggers[$name] = $loggerInstance;
 
@@ -266,7 +305,7 @@ class Adapter implements AdapterInterface
      * @param   string $name
      *
      * @return  $this
-     * @throws  LogException
+     * @throws  AdapterException
      * @since   1.0
      */
     public function stopLogger($name)
@@ -312,7 +351,7 @@ class Adapter implements AdapterInterface
      * Start Logger and set log levels
      *
      * @return  array
-     * @throws  LogException
+     * @throws  AdapterException
      * @since   1.0
      */
     public function getLoggers()
@@ -525,7 +564,7 @@ class Adapter implements AdapterInterface
      * @param   array  $context
      *
      * @return  $this
-     * @throws  LogException
+     * @throws  AdapterException
      * @since   1.0
      */
     public function log($level, $message, array $context = array())
@@ -538,7 +577,7 @@ class Adapter implements AdapterInterface
 
         if (isset($this->levels[$level])) {
         } else {
-            throw new LogException
+            throw new AdapterException
             ('Log log: Logger Level is Invalid: ' . $level);
         }
 
@@ -579,7 +618,7 @@ class Adapter implements AdapterInterface
                 break;
 
             default:
-                throw new LogException
+                throw new AdapterException
                 ('Log log: Logger Level is Invalid: ' . $level);
         }
 
@@ -594,11 +633,11 @@ class Adapter implements AdapterInterface
 
             if (isset($this->loggers[$name])) {
             } else {
-                throw new LogException
+                throw new AdapterException
                 ('Log log: Logger Instance not available: ' . $name);
             }
 
-            $logger_instance = $this->loggers[$name];
+            $this->adapterHandler = $this->loggers[$name];
 
             if (isset($context['datetime'])) {
             } else {
@@ -606,11 +645,10 @@ class Adapter implements AdapterInterface
             }
 
             try {
-                $logger_instance->log($message, $level, $context);
-
+                $this->adapterHandler->log($message, $level, $context);
             } catch (Exception $e) {
 
-                throw new LogException
+                throw new AdapterException
                 ('Log: log Failed for ' . $name . ' with Message: ' . $e->getMessage());
             }
         }

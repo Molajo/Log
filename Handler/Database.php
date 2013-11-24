@@ -1,26 +1,22 @@
 <?php
 /**
- * Dummy Logger
+ * Database Logger
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Log\Type;
 
-defined('MOLAJO') or die;
-
-
-
 /**
- * Dummy Logger
+ * Database Logger
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @since     1.0
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @since      1.0
  */
-class DummyLogger extends AbstractLogger
+class Database extends AbstractHandler
 {
     /**
      * Constructor

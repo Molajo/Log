@@ -1,38 +1,29 @@
 {
-    "name":"molajo/log",
-    "type":"molajo-bundle",
-    "description":"Molajo Log: File and Directory Services supports various Logs using Adapters, PHP platform independent",
-    "keywords":["Log", "Molajo", "PSR-0"],
-    "homepage":"http://github.com/Molajo/Log",
-    "license":"MIT",
-    "authors":[
+    "name": "molajo/log",
+    "type": "molajo-bundle",
+    "description": "Molajo Log Services for PHP Applications",
+    "keywords": ["Log", "CommonApi", "Molajo"],
+    "homepage": "http://github.com/Molajo/Log",
+    "license": "MIT",
+    "authors": [
         {
-            "name":"Amy Stephen",
-            "email":"AmyStephen@gmail.com",
-            "homepage":"http://AmyStephen.github.com"
-        },
-        {
-            "name":"Other Contributors",
-            "homepage":"http://github.com/Molajo/Log/contributors"
+            "name": "Amy Stephen",
+            "email": "AmyStephen@gmail.com",
+            "homepage": "http://AmyStephen.github.io"
         }
     ],
-    "require":{
-        "php":">=5.3.3"
+    "require": {
+        "php": ">=5.3.10",
+        "commonapi/filesystem": "dev-master"
     },
 
-    "support":{
-        "email":"hello@molajo.org",
-        "irc":"irc://irc.freenode.org/molajo"
+    "support": {
+        "event": "hello@molajo.org",
+        "irc": "irc://irc.freenode.org/molajo"
     },
-    "autoload":{
-        "psr-0":{
-            "Molajo\\Log":"./"
-        }
-    },
-    "minimum-stability":"dev",
-    "extra":{
-        "branch-alias":{
-            "dev-master":"1.0.x-dev"
+    "autoload": {
+        "psr-0": {
+            "Molajo\\Log": "./"
         }
     }
 }
