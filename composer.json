@@ -1,6 +1,6 @@
 {
     "name": "molajo/log",
-    "type": "molajo-bundle",
+    "type": "molajo-package",
     "description": "Molajo Log Services for PHP Applications",
     "keywords": ["Log", "CommonApi", "Molajo"],
     "homepage": "http://github.com/Molajo/Log",
@@ -8,13 +8,14 @@
     "authors": [
         {
             "name": "Amy Stephen",
-            "email": "AmyStephen@gmail.com",
-            "homepage": "http://AmyStephen.github.io"
+            "email": "AmyStephen@Molajo.org",
+            "homepage": "http://AmyStephen.com"
         }
     ],
     "require": {
         "php": ">=5.3.10",
-        "commonapi/filesystem": "dev-master"
+        "psr/log": "~1.0",
+        "commonapi/log": "dev-master"
     },
 
     "support": {

@@ -67,7 +67,7 @@ Then, the application can use that connection to perform log operations.
 Author
 ------
 
-Amy Stephen - <AmyStephen@gmail.com> - <http://twitter.com/AmyStephen><br />
+Amy Stephen - <AmyStephen@Molajo.org> - <http://twitter.com/AmyStephen><br />
 See also the list of [contributors](https://github.com/Molajo/Log/contributors) participating in this project.
 
 License
