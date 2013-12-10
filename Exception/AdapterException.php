@@ -1,6 +1,6 @@
 <?php
 /**
- * AdapterException
+ * RuntimeException
  *
  * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
@@ -19,7 +19,7 @@ use CommonApi\Log\ExceptionInterface;
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class AdapterException extends Exception implements ExceptionInterface
+class RuntimeException extends Exception implements ExceptionInterface
 {
 
 }

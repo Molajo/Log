@@ -8,7 +8,7 @@
  */
 namespace CommonApi\Log;
 
-use Exception\Log\AdapterException;
+use Exception\Log\RuntimeException;
 
 /**
  * Log Connection Interface
@@ -28,7 +28,7 @@ interface ConnectionInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @api
      */
     public function connect($options = array());
@@ -38,7 +38,7 @@ interface ConnectionInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @api
      */
     public function close();

@@ -9,7 +9,7 @@
 namespace Molajo\Log;
 
 use Exception;
-use Exception\Log\AdapterException;
+use Exception\Log\RuntimeException;
 use CommonApi\Log\LoggerInterface;
 
 /**
@@ -180,7 +180,7 @@ class Adapter implements LoggerInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @api
      */
     public function setLogger(LoggerInterface $logger)
@@ -189,7 +189,7 @@ class Adapter implements LoggerInterface
             $this->adapterHandler->setLogger($options);
         } catch (Exception $e) {
 
-            throw new AdapterException
+            throw new RuntimeException
             ('Log: Caught Exception: ' . $e->getMessage());
         }
 
@@ -205,7 +205,7 @@ class Adapter implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @since   1.0
      */
     public function startLogger($name, $logger_type = 'echo', $levels = array(), $context = array())
@@ -287,7 +287,7 @@ class Adapter implements LoggerInterface
                     break;
 
                 default:
-                    throw new AdapterException
+                    throw new RuntimeException
                     ('Log startLogger: Logger Level is Invalid: ' . $level);
             }
         }
@@ -305,7 +305,7 @@ class Adapter implements LoggerInterface
      * @param   string $name
      *
      * @return  $this
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @since   1.0
      */
     public function stopLogger($name)
@@ -351,7 +351,7 @@ class Adapter implements LoggerInterface
      * Start Logger and set log levels
      *
      * @return  array
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @since   1.0
      */
     public function getLoggers()
@@ -564,7 +564,7 @@ class Adapter implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @throws  AdapterException
+     * @throws  RuntimeException
      * @since   1.0
      */
     public function log($level, $message, array $context = array())
@@ -577,7 +577,7 @@ class Adapter implements LoggerInterface
 
         if (isset($this->levels[$level])) {
         } else {
-            throw new AdapterException
+            throw new RuntimeException
             ('Log log: Logger Level is Invalid: ' . $level);
         }
 
@@ -618,7 +618,7 @@ class Adapter implements LoggerInterface
                 break;
 
             default:
-                throw new AdapterException
+                throw new RuntimeException
                 ('Log log: Logger Level is Invalid: ' . $level);
         }
 
@@ -633,7 +633,7 @@ class Adapter implements LoggerInterface
 
             if (isset($this->loggers[$name])) {
             } else {
-                throw new AdapterException
+                throw new RuntimeException
                 ('Log log: Logger Instance not available: ' . $name);
             }
 
@@ -648,7 +648,7 @@ class Adapter implements LoggerInterface
                 $this->adapterHandler->log($message, $level, $context);
             } catch (Exception $e) {
 
-                throw new AdapterException
+                throw new RuntimeException
                 ('Log: log Failed for ' . $name . ' with Message: ' . $e->getMessage());
             }
         }
