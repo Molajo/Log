@@ -3,7 +3,7 @@
  * Display Logger
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Log\Type;
@@ -15,7 +15,7 @@ use Exception\Log\DisplayHandlerException;
  * Display Logger
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @since      1.0
  */
@@ -64,10 +64,6 @@ class Display extends AbstractHandler
     public function log($level, $message, array $context = array())
     {
         $log_entry = parent::log($level, $message, $context);
-
-        echo '<pre>';
-        var_dump($log_entry);
-        echo '</pre>';
 
         return $this;
     }
