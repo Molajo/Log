@@ -44,10 +44,12 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $base = substr(__DIR__, 0, strlen(__DIR__) - 5);
+
         $this->options = array();
 
         $this->options['log_service'] = 1;
-        $this->options['log_folder']  = BASE_FOLDER . '/.dev/Log';
+        $this->options['log_folder']  = $base . '/.dev/Log';
         $this->options['log_time']    = 900;
 
         $this->adapter = new Connection('File', $this->options);
