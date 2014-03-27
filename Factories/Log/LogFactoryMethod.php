@@ -10,8 +10,8 @@ namespace Molajo\Factories\Log;
 
 use Exception;
 use CommonApi\Exception\RuntimeException;
-use Molajo\IoC\FactoryBase;
-use CommonApi\IoC\FactoryMethodInterface;
+use Molajo\IoC\FactoryMethodBase;
+use CommonApi\IoC\FactoryInterface;
 
 /**
  * Log Factory Method
@@ -21,7 +21,7 @@ use CommonApi\IoC\FactoryMethodInterface;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class LogFactoryMethod extends FactoryBase implements FactoryMethodInterface, FactoryMethodBatchSchedulingInterface
+class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, FactoryBatchInterface
 {
     /**
      * Constructor
@@ -41,7 +41,6 @@ class LogFactoryMethod extends FactoryBase implements FactoryMethodInterface, Fa
     }
 
     /**
-     * Instantiate a new handler and inject it into the Adapter for the FactoryMethodInterface
      * Retrieve a list of Interface dependencies and return the data ot the controller.
      *
      * @return  array
