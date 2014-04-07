@@ -45,7 +45,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      *
      * @return  array
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function setDependencies(array $reflection = null)
     {
@@ -60,7 +60,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function instantiateClass()
     {
