@@ -28,7 +28,7 @@ Then, the application can use that connection to perform log operations.
 
 ### Requirements and Compliance ###
  * PHP framework independent, no dependencies
- * Requires PHP 5.3, or above
+ * Requires PHP 5.4, or above
  * [Semantic Versioning](http://semver.org/)
  * Compliant with:
     * [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) and [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md) Namespacing

@@ -14,7 +14,7 @@ namespace CommonApi\Log;
  * @package    Molajo
  * @license    MIT
  * @copyright  2014 Amy Stephen. All rights reserved.
- * @since      1.0
+ * @since      1.0.0
  */
 interface ExceptionInterface
 {
