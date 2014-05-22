@@ -6,7 +6,7 @@
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
-namespace Molajo\Log\Type;
+namespace Molajo\Log\Adapter;
 
 use stdClass;
 
@@ -18,7 +18,7 @@ use stdClass;
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @since      1.0
  */
-abstract class AbstractAdapter
+abstract class AbstractLogger
 {
     /**
      * Context
@@ -109,6 +109,14 @@ abstract class AbstractAdapter
     protected $memory_difference = 0.0;
 
     /**
+     * Formatted memory
+     *
+     * @var    float
+     * @since  1.0
+     */
+    protected $formatted_memory = 0.0;
+
+    /**
      * Message
      *
      * @var    string
@@ -151,24 +159,7 @@ abstract class AbstractAdapter
     public function __construct(
         $context = array()
     ) {
-        if (is_array($context)) {
-        } else {
-            $context = array();
-        }
 
-        $this->context = $context;
-
-        if (isset($context['datetime'])) {
-            $this->datetime = $context['datetime'];
-        }
-
-        if (isset($context['timezone'])) {
-            $this->timezone = $context['timezone'];
-        }
-
-        if (isset($context['log_entry_fields'])) {
-            $this->log_entry_fields = $context['log_entry_fields'];
-        }
 
         $this->started_time  = $this->getMicrotimeFloat();
         $this->previous_time = $this->getMicrotimeFloat();
@@ -204,13 +195,35 @@ abstract class AbstractAdapter
         $this->log_entry = new stdClass();
 
         $this->log_entry->entry_date = date("Y-m-d") . ' ' . date("H:m:s");
+        $this->log_entry->level             = (int)$level;
+        $this->log_entry->message           = (string)$message;
+        $this->log_entry->context           = (string)$context;
+
         $this->calculateElapsedTime();
         $this->calculateMemoryUsage();
-        $this->log_entry->level   = (int)$level;
-        $this->log_entry->message = (string)$message;
-        $this->log_entry->context = (string)$context;
 
-        $this->setLogEntryFields($this->log_entry);
+        if (count($this->log_entry_fields) > 0) {
+            $this->setLogEntryFields($this->log_entry);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Log the message for the level given the data in context
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    public function setLogEntryFields()
+    {
+        foreach ($this->log_entry_fields as $field) {
+            if (isset($this->context[$field])) {
+                $this->log_entry->$field = $this->context[$field];
+            } else {
+                $this->log_entry->$field = null;
+            }
+        }
 
         return $this;
     }
@@ -287,32 +300,6 @@ abstract class AbstractAdapter
         $this->log_entry->previous_memory   = $this->previous_memory;
         $this->log_entry->memory_difference = $this->memory_difference;
         $this->log_entry->formatted_memory  = $this->memory_difference;
-
-        return $this;
-    }
-
-    /**
-     * Log the message for the level given the data in context
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function setLogEntryFields()
-    {
-        if (is_array($this->log_entry_fields)
-            && count($this->log_entry_fields) > 0
-        ) {
-        } else {
-            return $this;
-        }
-
-        foreach ($this->log_entry_fields as $field) {
-            if (isset($this->context[$field])) {
-                $this->log_entry->$field = $this->context[$field];
-            } else {
-                $this->log_entry->$field = null;
-            }
-        }
 
         return $this;
     }

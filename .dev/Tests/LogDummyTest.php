@@ -6,9 +6,10 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Log\Test;
+namespace Molajo\Log\Adapter;
 
 use DateTime;
+use stdClass;
 
 /**
  * Log Test
@@ -23,41 +24,48 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * @var Log Object
      */
-    protected $log;
+    protected $logger;
 
     /**
-     * Initialises Adapter
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
      */
     protected function setUp()
     {
-        $name        = 'Test1';
-        $logger_type = 'Dummy';
-        $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $context     = array();
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'Dummy';
+        $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context     = array();
+        $loggers[]                   = $logger_request;
 
-        $class     = 'Molajo\\Log\\Adapter';
-        $this->log = new $class($name, $logger_type, $levels, $context);
+        $class                       = 'Molajo\\Log\\Logger';
+        $this->logger                = new $class($loggers);
 
         return;
     }
 
     /**
-     * Testing the start logger function from contructor
-     *
-     * @covers Molajo\Log\Adapter::__construct
-     */
-    public function testStartLoggerFromConstruct()
-    {
-        $loggers = $this->log->getLoggers();
-
-        $this->assertEquals(1, count($loggers));
-        $this->assertTrue(isset($loggers['test1']));
-    }
-
-    /**
      * Emergency - 600
      *
-     * @covers Molajo\Log\Adapter::emergency
+     * @covers Molajo\Log\Logger::emergency
      */
     public function testEmergency()
     {
@@ -65,7 +73,8 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->emergency($message, $context);
+        $this->logger->emergency($message, $context);
+
 
         return $this;
     }
@@ -73,7 +82,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Alert - 550
      *
-     * @covers Molajo\Log\Adapter::alert
+     * @covers Molajo\Log\Logger::alert
      */
     public function testAlert()
     {
@@ -81,7 +90,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->alert($message, $context);
+        $this->logger->alert($message, $context);
 
         return $this;
     }
@@ -89,7 +98,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Critical - 500
      *
-     * @covers Molajo\Log\Adapter::critical
+     * @covers Molajo\Log\Logger::critical
      */
     public function testCritical()
     {
@@ -97,7 +106,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->critical($message, $context);
+        $this->logger->critical($message, $context);
 
         return $this;
     }
@@ -105,7 +114,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Error - 400
      *
-     * @covers Molajo\Log\Adapter::error
+     * @covers Molajo\Log\Logger::error
      */
     public function testError()
     {
@@ -113,7 +122,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->error($message, $context);
+        $this->logger->error($message, $context);
 
         return $this;
     }
@@ -121,7 +130,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Warning - 300
      *
-     * @covers Molajo\Log\Adapter::warning
+     * @covers Molajo\Log\Logger::warning
      */
     public function testWarning()
     {
@@ -129,7 +138,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->warning($message, $context);
+        $this->logger->warning($message, $context);
 
         return $this;
     }
@@ -137,7 +146,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Notice - 250
      *
-     * @covers Molajo\Log\Adapter::notice
+     * @covers Molajo\Log\Logger::notice
      */
     public function testNotice()
     {
@@ -145,7 +154,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->notice($message, $context);
+        $this->logger->notice($message, $context);
 
         return $this;
     }
@@ -153,7 +162,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Info - 200
      *
-     * @covers Molajo\Log\Adapter::info
+     * @covers Molajo\Log\Logger::info
      */
     public function testInfo()
     {
@@ -161,7 +170,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->info($message, $context);
+        $this->logger->info($message, $context);
 
         return $this;
     }
@@ -169,7 +178,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Debug - 100
      *
-     * @covers Molajo\Log\Adapter::info
+     * @covers Molajo\Log\Logger::info
      */
     public function debugInfo()
     {
@@ -177,7 +186,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->debug($message, $context);
+        $this->logger->debug($message, $context);
 
         return $this;
     }
@@ -185,7 +194,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Debug - 100
      *
-     * @covers Molajo\Log\Adapter::log
+     * @covers Molajo\Log\Logger::log
      */
     public function log()
     {
@@ -193,16 +202,8 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->log->log($level, $message, $context);
+        $this->logger->log($level, $message, $context);
 
         return $this;
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 }

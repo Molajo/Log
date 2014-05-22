@@ -35,7 +35,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
         $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
         $context     = array();
 
-        $class     = 'Molajo\\Log\\Adapter';
+        $class     = 'Molajo\\Log\\Logger';
         $this->log = new $class($name, $logger_type, $levels, $context);
 
         return;
@@ -44,7 +44,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing the start logger function from contructor
      *
-     * @covers Molajo\Log\Adapter::__construct
+     * @covers Molajo\Log\Logger::__construct
      */
     public function testStartLoggerFromConstruct()
     {
@@ -57,7 +57,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing the start logger function thru the startlogger
      *
-     * @covers Molajo\Log\Adapter::startLogger
+     * @covers Molajo\Log\Logger::startLogger
      */
     public function testStartLoggerNormally()
     {
@@ -77,7 +77,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing the start logger function thru the startlogger
      *
-     * @covers Molajo\Log\Adapter::startLogger
+     * @covers Molajo\Log\Logger::startLogger
      */
     public function testGetLoggers()
     {
@@ -90,7 +90,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing the start logger function thru the startlogger
      *
-     * @covers Molajo\Log\Adapter::stopLogger
+     * @covers Molajo\Log\Logger::stopLogger
      */
     public function testStopLogger()
     {
@@ -105,7 +105,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing the start logger function thru the startlogger
      *
-     * @covers Molajo\Log\Adapter::stopLogger
+     * @covers Molajo\Log\Logger::stopLogger
      */
     public function testSetTimezone()
     {

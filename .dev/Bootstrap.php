@@ -15,7 +15,7 @@ if (function_exists('CreateClassMap')) {
 
 $classmap = array();
 
-$results  = createClassMap($base . '/Source/Adapter', 'Molajo\\Log\\Adapter\\');
+$results  = createClassMap($base . '/Source/Adapter', 'Molajo\\Log\\Logger\\');
 $classmap = array_merge($classmap, $results);
 
 $results  = createClassMap($base . '/Source', 'Molajo\\Log\\');

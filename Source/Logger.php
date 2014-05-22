@@ -1,6 +1,6 @@
 <?php
 /**
- * Adapter for Log
+ * Logger for Log
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
@@ -16,17 +16,17 @@ use Psr\Log\LoggerInterface;
 use stdClass;
 
 /**
- * Adapter for Log
+ * Logger for Log
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @since      1.0
  */
-class Adapter implements LoggerInterface
+class Logger implements LoggerInterface
 {
     /**
-     * Logger Adapters
+     * Loggers
      *
      * @var    array
      * @since  1.0
@@ -167,12 +167,12 @@ class Adapter implements LoggerInterface
         $logger_type = $this->editLoggerType($logger_type);
         $name        = $this->editLoggerName($name, $logger_type);
 
-        $loggerClass    = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type));
+        $loggerClass    = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type)) . 'Logger';
         $loggerInstance = new $loggerClass($context);
 
         $this->loggers[$name] = $loggerInstance;
 
-        $this->registerLoggerLevels($levels, $name);
+        $this->registerLoggerLevels($name, $levels);
 
         return $this;
     }
@@ -201,6 +201,7 @@ class Adapter implements LoggerInterface
      * Edit Logger Name
      *
      * @param   string $name
+     * @param   string $logger_type
      *
      * @return  string
      * @since   1.0
@@ -227,11 +228,9 @@ class Adapter implements LoggerInterface
      */
     protected function registerLoggerLevels($name, array $levels = array())
     {
-        if (is_array($levels) && count($levels) > 0) {
-            foreach ($this->levels_by_loggers as $key => $list) {
-                if (in_array($key, $levels)) {
-                    $list[] = $name;
-                }
+        foreach ($this->levels_by_loggers as $key => $list) {
+            if (in_array($key, $levels)) {
+                $list[] = $name;
             }
         }
 
@@ -313,7 +312,7 @@ class Adapter implements LoggerInterface
     {
         $date_time = new DateTime('now');
         $date_time->setTimezone($this->timezone);
-        $log_entry->datetime = $date_time->format($date_time, 'Y-m-d H:i:s');
+        $log_entry->datetime = $date_time->format('Y-m-d H:i:s');
 
         return $log_entry;
     }
@@ -326,7 +325,6 @@ class Adapter implements LoggerInterface
      * @param   string $message
      * @param   array  $context
      *
-     *
      * @return  $this
      * @throws  \Psr\Log\InvalidArgumentException
      * @since   1.0
@@ -334,7 +332,7 @@ class Adapter implements LoggerInterface
     protected function logLogger($name, $level, $message, array $context = array())
     {
         try {
-            $this->loggers[$name]->log($message, $level, $context);
+            return $this->loggers[$name]->log($message, $level, $context);
 
         } catch (Exception $e) {
 

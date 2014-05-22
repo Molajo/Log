@@ -35,7 +35,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
         $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
         $context     = array();
 
-        $class     = 'Molajo\\Log\\Adapter';
+        $class     = 'Molajo\\Log\\Logger';
         $this->log = new $class($name, $logger_type, $levels, $context);
 
         return;
@@ -44,7 +44,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing the start logger function from contructor
      *
-     * @covers Molajo\Log\Adapter::__construct
+     * @covers Molajo\Log\Logger::__construct
      */
     public function testStartLoggerFromConstruct()
     {
@@ -57,7 +57,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Emergency - 600
      *
-     * @covers Molajo\Log\Adapter::emergency
+     * @covers Molajo\Log\Logger::emergency
      */
     public function testEmergency()
     {
@@ -73,7 +73,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Alert - 550
      *
-     * @covers Molajo\Log\Adapter::alert
+     * @covers Molajo\Log\Logger::alert
      */
     public function testAlert()
     {
@@ -89,7 +89,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Critical - 500
      *
-     * @covers Molajo\Log\Adapter::critical
+     * @covers Molajo\Log\Logger::critical
      */
     public function testCritical()
     {
@@ -105,7 +105,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Error - 400
      *
-     * @covers Molajo\Log\Adapter::error
+     * @covers Molajo\Log\Logger::error
      */
     public function testError()
     {
@@ -121,7 +121,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Warning - 300
      *
-     * @covers Molajo\Log\Adapter::warning
+     * @covers Molajo\Log\Logger::warning
      */
     public function testWarning()
     {
@@ -137,7 +137,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Notice - 250
      *
-     * @covers Molajo\Log\Adapter::notice
+     * @covers Molajo\Log\Logger::notice
      */
     public function testNotice()
     {
@@ -153,7 +153,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Info - 200
      *
-     * @covers Molajo\Log\Adapter::info
+     * @covers Molajo\Log\Logger::info
      */
     public function testInfo()
     {
@@ -169,7 +169,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Debug - 100
      *
-     * @covers Molajo\Log\Adapter::info
+     * @covers Molajo\Log\Logger::info
      */
     public function debugInfo()
     {
@@ -185,7 +185,7 @@ class EchoTest extends \PHPUnit_Framework_TestCase
     /**
      * Debug - 100
      *
-     * @covers Molajo\Log\Adapter::log
+     * @covers Molajo\Log\Logger::log
      */
     public function log()
     {

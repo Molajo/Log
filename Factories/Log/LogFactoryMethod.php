@@ -74,7 +74,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      */
     public function getAdapter($type)
     {
-        $class = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($type));
+        $class = 'Molajo\\Log\\Logger\\' . ucfirst(strtolower($type));
 
         try {
             return new $class();
