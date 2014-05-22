@@ -87,7 +87,7 @@ class ErrorHandling implements ErrorHandlingInterface
      * @param   string $file
      * @param   string $line_number
      *
-     * @return  object|stdClass
+     * @return  stdClass
      * @throws  \CommonApi\Exception\ErrorThrownAsException
      * @since   1.0.0
      */

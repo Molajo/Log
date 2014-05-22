@@ -57,7 +57,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     protected function setUp()
     {
@@ -106,7 +109,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testEmergency()
     {
@@ -154,7 +160,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testAlert()
     {
@@ -202,7 +211,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testCritical()
     {
@@ -250,7 +262,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testError()
     {
@@ -298,7 +313,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testWarning()
     {
@@ -344,7 +362,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testNotice()
     {
@@ -392,7 +413,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testInfo()
     {
@@ -438,7 +462,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testDebugInfo()
     {
@@ -486,7 +513,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testLog()
     {
@@ -532,7 +562,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testClear()
     {
@@ -555,6 +588,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         return $this;
     }
+
     /**
      * @covers Molajo\Log\Logger::__construct
      * @covers Molajo\Log\Logger::getLog
@@ -586,7 +620,10 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
      */
     public function testStopLogger()
     {

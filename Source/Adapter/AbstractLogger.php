@@ -47,6 +47,14 @@ abstract class AbstractLogger
     protected $maintain_log = true;
 
     /**
+     * Columns to render output
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $columns;
+
+    /**
      * Log Entry
      *
      * @var    object
@@ -325,11 +333,6 @@ abstract class AbstractLogger
      */
     protected function createLogEntryFields(array $context = array())
     {
-        if (count($context) > 0) {
-        } else {
-            return $this;
-        }
-
         if (isset($context['log_entry_fields'])) {
             $log_entry_fields = $context['log_entry_fields'];
         } else {

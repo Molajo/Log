@@ -8,12 +8,9 @@
  */
 namespace Molajo\Log;
 
-use DateTime;
-use DateTimeZone;
 use Exception;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
-use stdClass;
 
 /**
  * Logger for Log
