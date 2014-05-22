@@ -23,6 +23,14 @@ use stdClass;
 abstract class AbstractLogger
 {
     /**
+     * File Location
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $file_location = null;
+
+    /**
      * Log
      *
      * @var    array
@@ -113,7 +121,7 @@ abstract class AbstractLogger
         $context = array()
     ) {
         $this->timezone = new DateTimeZone(date_default_timezone_get() ? : 'UTC');
-        $this->createLogEntryFields();
+        $this->processContextArray($context);
         $this->started_time  = $this->getMicrotimeFloat();
         $this->previous_time = $this->getMicrotimeFloat();
     }
@@ -279,7 +287,30 @@ abstract class AbstractLogger
         $this->log_entry->formatted_memory  = sprintf(
             '%0.2f MB (+%.3f)',
             $memory,
-            $memory_difference);
+            $memory_difference
+        );
+
+        return $this;
+    }
+
+    /**
+     * Process the context array entries
+     *
+     * @param   array  $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function processContextArray(array $context = array())
+    {
+        if (count($context) > 0) {
+        } else {
+            return $this;
+        }
+
+        $this->createLogEntryFields($context);
+        $this->setMaintainLog($context);
+        $this->setFileLocation($context);
 
         return $this;
     }
@@ -311,10 +342,41 @@ abstract class AbstractLogger
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * Set the maintain_log flag
+     *
+     * @param   array  $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function setMaintainLog(array $context)
+    {
         if (isset($context['maintain_log']) && $context['maintain_log'] === false) {
             $this->maintain_log = false;
         } else {
             $this->maintain_log = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set File Location
+     *
+     * @param   array  $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function setFileLocation(array $context)
+    {
+        if (isset($context['file_location'])) {
+            $this->file_location = $context['file_location'];
+            unset($context['file_location']);
         }
 
         return $this;

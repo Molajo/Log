@@ -31,7 +31,7 @@ class Logger implements LoggerInterface
      * @var    array
      * @since  1.0
      */
-    protected $logger_adapters = array('dummy', 'echo', 'memory');
+    protected $logger_adapters = array('dummy', 'echo', 'errorlog', 'file', 'memory');
 
     /**
      * RFC 5424 syslog protocol Logging levels
@@ -112,9 +112,13 @@ class Logger implements LoggerInterface
      * @since   1.0.0
      */
     public function __construct(
-        array $logger_requests = array()
+        array $logger_requests = array(),
+        $logger_adapters = array()
     ) {
         $this->startLoggers($logger_requests);
+        if (count($logger_adapters) > 0) {
+            $this->logger_adapters = $logger_adapters;
+        }
     }
 
     /**
@@ -159,6 +163,7 @@ class Logger implements LoggerInterface
         $name                 = $this->editLoggerName($name, $logger_type);
 
         $loggerClass          = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type)) . 'Logger';
+
         $loggerInstance       = new $loggerClass($context);
         $this->loggers[$name] = $loggerInstance;
 
