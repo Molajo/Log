@@ -16,7 +16,7 @@ use Molajo\Log\Connection;
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
- * @since      1.0.0
+ * @since      1.0
  */
 class LogTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,12 +44,10 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $base = substr(__DIR__, 0, strlen(__DIR__) - 5);
-
         $this->options = array();
 
         $this->options['log_service'] = 1;
-        $this->options['log_folder']  = $base . '/.dev/Log';
+        $this->options['log_folder']  = BASE_FOLDER . '/.dev/Log';
         $this->options['log_time']    = 900;
 
         $this->adapter = new Connection('File', $this->options);

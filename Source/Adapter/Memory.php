@@ -1,6 +1,6 @@
 <?php
 /**
- * Display Logger
+ * Memory Logger
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
@@ -9,17 +9,17 @@
 namespace Molajo\Log\Type;
 
 use stdClass;
-use Exception\Log\DisplayHandlerException;
+use Exception\Log\MemoryAdapterException;
 
 /**
- * Display Logger
+ * Memory Logger
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @since      1.0.0
+ * @since      1.0
  */
-class Display extends AbstractHandler
+class Memory extends AbstractAdapter
 {
     /**
      * Constructor

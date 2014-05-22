@@ -16,9 +16,9 @@ use stdClass;
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @since      1.0.0
+ * @since      1.0
  */
-abstract class AbstractHandler
+abstract class AbstractAdapter
 {
     /**
      * Context
@@ -201,21 +201,14 @@ abstract class AbstractHandler
      */
     public function log($level, $message, array $context = array())
     {
-        if (isset($context['datetime'])) {
-            $this->datetime = $context['datetime'];
-        }
-
-        if (isset($context['timezone'])) {
-            $this->timezone = $context['timezone'];
-        }
-
         $this->log_entry = new stdClass();
 
         $this->log_entry->entry_date = date("Y-m-d") . ' ' . date("H:m:s");
         $this->calculateElapsedTime();
         $this->calculateMemoryUsage();
         $this->log_entry->level   = (int)$level;
-        $this->log_entry->message = (string)$this->message;
+        $this->log_entry->message = (string)$message;
+        $this->log_entry->context = (string)$context;
 
         $this->setLogEntryFields($this->log_entry);
 

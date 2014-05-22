@@ -16,9 +16,9 @@ use DateTime;
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
- * @since      1.0.0
+ * @since      1.0
  */
-class DummyTest extends \PHPUnit_Framework_TestCase
+class EchoTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Log Object
@@ -31,7 +31,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $name        = 'Test1';
-        $logger_type = 'Dummy';
+        $logger_type = 'Echo';
         $levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
         $context     = array();
 

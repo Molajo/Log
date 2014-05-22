@@ -1,8 +1,8 @@
 {
     "name": "molajo/log",
     "type": "molajo-package",
-    "description": "Molajo Log Services for PHP Applications",
-    "keywords": ["Log", "CommonApi", "Molajo"],
+    "description": "Molajo Logs: Basic PSR-3 compliant Log Package for PHP applications",
+    "keywords": ["Log", "Molajo", "CommonApi"],
     "homepage": "http://github.com/Molajo/Log",
     "license": "MIT",
     "authors": [
@@ -13,17 +13,17 @@
         }
     ],
     "require": {
-        "php": ">=5.3.10",
-        "psr/log": "~1.0"
+        "psr/log": "dev-master",
+        "commonapi/controller": "dev-master",
+        "commonapi/exception": "dev-master"
     },
-
     "support": {
-        "event": "hello@molajo.org",
+        "log": "hello@molajo.org",
         "irc": "irc://irc.freenode.org/molajo"
     },
     "autoload": {
         "psr-4": {
-            "Molajo\\Log": "./",
+            "Molajo\\Log\\": "Source/",
             "Molajo\\Factories\\": "Factories/"
         }
     },
