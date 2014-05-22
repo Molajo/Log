@@ -45,6 +45,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::notice
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      */
     protected function setUp()
     {
@@ -63,7 +64,25 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Emergency - 600
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::emergency
      */
@@ -73,14 +92,31 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $message = 'Hello';
         $context = array();
 
-        $this->logger->emergency($message, $context);
-
+        $results = $this->logger->emergency($message, $context);
 
         return $this;
     }
 
     /**
-     * Alert - 550
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::alert
      */
@@ -96,7 +132,25 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Critical - 500
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::critical
      */
@@ -112,7 +166,25 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Error - 400
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::error
      */
@@ -128,7 +200,25 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Warning - 300
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::warning
      */
@@ -144,7 +234,25 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Notice - 250
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::notice
      */
@@ -160,7 +268,25 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Info - 200
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::info
      */
@@ -176,11 +302,29 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Debug - 100
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::info
      */
-    public function debugInfo()
+    public function testDebugInfo()
     {
         $level   = 100;
         $message = 'Hello';
@@ -192,17 +336,66 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Debug - 100
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
      *
      * @covers Molajo\Log\Logger::log
      */
-    public function log()
+    public function testLog()
     {
         $level   = 200;
         $message = 'Hello';
         $context = array();
 
         $this->logger->log($level, $message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::setLogDateTime
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     * @covers Molajo\Log\Adapter\DummyLogger::log
+     *
+     * @covers Molajo\Log\Logger::log
+     */
+    public function testStopLogger()
+    {
+
+        $this->logger->stopLogger('test1');
 
         return $this;
     }
