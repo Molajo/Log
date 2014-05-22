@@ -34,24 +34,6 @@ class ErrorlogLogger extends AbstractLogger
     );
 
     /**
-     * Constructor
-     *
-     * @param   array $context  Use in subclass, if needed, when starting logger
-     *
-     * @since   1.0.0
-     */
-    public function __construct(
-        $context = array()
-    ) {
-        if (isset($context['columns'])) {
-            $this->file_location = $context['columns'];
-            unset($context['columns']);
-        }
-
-        parent::__construct($context);
-    }
-
-    /**
      * Log the message for the level given the data in context
      *
      * @param   mixed  $level

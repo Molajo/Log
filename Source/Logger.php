@@ -325,15 +325,7 @@ class Logger implements LoggerInterface
      */
     protected function logLogger($name, $level, $message, array $context = array())
     {
-        try {
-            return $this->loggers[$name]->log($level, $message, $context);
-
-        } catch (Exception $e) {
-
-            throw new InvalidArgumentException(
-                'Log: log Failed for ' . $name . ' with Message: ' . $e->getMessage()
-            );
-        }
+        return $this->loggers[$name]->log($level, $message, $context);
     }
 
     /**

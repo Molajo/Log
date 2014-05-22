@@ -121,7 +121,7 @@ abstract class AbstractLogger
     /**
      * Constructor
      *
-     * @param   array $context  Use in subclass, if needed, when starting logger
+     * @param   array $context Use in subclass, if needed, when starting logger
      *
      * @since   1.0.0
      */
@@ -176,19 +176,17 @@ abstract class AbstractLogger
         $this->log_entry->level      = (int)$level;
         $this->log_entry->level_name = (string)$context['log_level_name'];
         unset($context['log_level_name']);
-        $this->log_entry->message    = (string)$message;
+        $this->log_entry->message = (string)$message;
 
         $this->calculateElapsedTime();
-        $this->calculateMemoryUsage();
 
-        if (count($this->log_entry_fields) > 0) {
-            $this->setLogEntryFields($context);
+        if (function_exists('memory_get_usage')) {
+            $this->calculateMemoryUsage();
         }
 
-        if ($this->maintain_log === true) {
-            $this->log_entry_key = count($this->log);
-            $this->log[] = $this->log_entry;
-        }
+        $this->processContextArray($context);
+
+        $this->saveLog();
 
         return $this;
     }
@@ -277,26 +275,19 @@ abstract class AbstractLogger
      */
     protected function calculateMemoryUsage()
     {
-        $memory = 0;
-
-        if (function_exists('memory_get_usage')) {
-            $memory = memory_get_usage(true) / 1048576;
-        }
-
-        if ($memory > $this->previous_memory) {
-            $memory_difference = $memory - $this->previous_memory;
+        $this->log_entry->memory_usage    = memory_get_usage(true) / 1048576;
+        $this->log_entry->previous_memory = $this->previous_memory;
+        if ($this->log_entry->memory_usage > $this->previous_memory) {
+            $this->log_entry->memory_difference = $this->log_entry->memory_usage - $this->previous_memory;
         } else {
-            $memory_difference = 0;
+            $this->log_entry->memory_difference = 0;
         }
-
-        $this->log_entry->memory_usage      = $memory;
-        $this->log_entry->previous_memory   = $this->previous_memory;
-        $this->log_entry->memory_difference = $memory_difference;
-        $this->log_entry->formatted_memory  = sprintf(
+        $this->log_entry->formatted_memory = sprintf(
             '%0.2f MB (+%.3f)',
-            $memory,
-            $memory_difference
+            $this->log_entry->memory_usage,
+            $this->log_entry->memory_difference
         );
+        $this->previous_memory             = $this->log_entry->memory_usage;
 
         return $this;
     }
@@ -304,7 +295,7 @@ abstract class AbstractLogger
     /**
      * Process the context array entries
      *
-     * @param   array  $context
+     * @param   array $context
      *
      * @return  $this
      * @since   1.0.0
@@ -319,6 +310,7 @@ abstract class AbstractLogger
         $this->createLogEntryFields($context);
         $this->setMaintainLog($context);
         $this->setFileLocation($context);
+        $this->setColumns($context);
 
         return $this;
     }
@@ -326,7 +318,7 @@ abstract class AbstractLogger
     /**
      * Log the message for the level given the data in context
      *
-     * @param   array  $context
+     * @param   array $context
      *
      * @return  $this
      * @since   1.0.0
@@ -351,7 +343,7 @@ abstract class AbstractLogger
     /**
      * Set the maintain_log flag
      *
-     * @param   array  $context
+     * @param   array $context
      *
      * @return  $this
      * @since   1.0.0
@@ -370,7 +362,7 @@ abstract class AbstractLogger
     /**
      * Set File Location
      *
-     * @param   array  $context
+     * @param   array $context
      *
      * @return  $this
      * @since   1.0.0
@@ -380,6 +372,49 @@ abstract class AbstractLogger
         if (isset($context['file_location'])) {
             $this->file_location = $context['file_location'];
             unset($context['file_location']);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set File Location
+     *
+     * @param   array $context
+     *
+     * @return  array
+     * @since   1.0.0
+     */
+    protected function setColumns(array $context)
+    {
+        if (isset($context['columns'])) {
+            $columns = $context['columns'];
+            unset($context['columns']);
+        } else {
+            $columns = array();
+        }
+
+        if (is_array($columns)) {
+            $this->columns = $columns;
+        } else {
+            $this->columns = array();
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Set Log
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function saveLog()
+    {
+        if ($this->maintain_log === true) {
+            $this->log_entry_key = count($this->log);
+            $this->log[]         = $this->log_entry;
         }
 
         return $this;

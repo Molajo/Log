@@ -8,7 +8,6 @@
  */
 namespace Molajo\Log\Adapter;
 
-use DateTime;
 use stdClass;
 
 /**
@@ -61,6 +60,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     protected function setUp()
     {
@@ -113,6 +113,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testEmergency()
     {
@@ -164,6 +165,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testAlert()
     {
@@ -215,6 +217,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testCritical()
     {
@@ -266,6 +269,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testError()
     {
@@ -317,6 +321,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testWarning()
     {
@@ -366,6 +371,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testNotice()
     {
@@ -417,6 +423,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testInfo()
     {
@@ -466,6 +473,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testDebugInfo()
     {
@@ -517,6 +525,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testLog()
     {
@@ -566,6 +575,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testClear()
     {
@@ -624,6 +634,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      */
     public function testStopLogger()
     {
