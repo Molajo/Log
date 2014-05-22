@@ -81,7 +81,7 @@ abstract class AbstractLogger
     /**
      * Timezone
      *
-     * @var    string
+     * @var    DateTimeZone
      * @since  1.0
      */
     protected $timezone = '';
@@ -184,7 +184,7 @@ abstract class AbstractLogger
             $this->calculateMemoryUsage();
         }
 
-        $this->processContextArray($context);
+        $this->setLogEntryFields($context);
 
         $this->saveLog();
 
@@ -203,26 +203,6 @@ abstract class AbstractLogger
         $date_time->setTimezone($this->timezone);
 
         return $date_time->format('Y-m-d H:i:s');
-    }
-
-    /**
-     * Add the custom log entry fields to the log
-     *
-     * @return  $this
-     * @since   1.0.0
-     */
-    protected function setLogEntryFields($context)
-    {
-        foreach ($this->log_entry_fields as $key => $value) {
-
-            if (isset($context[$key])) {
-                $this->log_entry->$key = $context[$key];
-            } else {
-                $this->log_entry->$key = $value;
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -293,6 +273,48 @@ abstract class AbstractLogger
     }
 
     /**
+     * Add the custom log entry fields to the log
+     *
+     * @param   array $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function setLogEntryFields($context)
+    {
+        if (count($this->log_entry_fields) === 0) {
+            return $this;
+        }
+
+        foreach ($this->log_entry_fields as $key => $value) {
+
+            if (isset($context[$key])) {
+                $this->log_entry->$key = $context[$key];
+            } else {
+                $this->log_entry->$key = $value;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set Log
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function saveLog()
+    {
+        if ($this->maintain_log === true) {
+            $this->log_entry_key = count($this->log);
+            $this->log[]         = $this->log_entry;
+        }
+
+        return $this;
+    }
+
+    /**
      * Process the context array entries
      *
      * @param   array $context
@@ -333,9 +355,11 @@ abstract class AbstractLogger
 
         if (count($log_entry_fields) > 0) {
             foreach ($log_entry_fields as $key => $value) {
-                $this->log_entry->$key = $value;
+                $log_entry_fields[$key] = $value;
             }
         }
+
+        $this->log_entry_fields = $log_entry_fields;
 
         return $this;
     }
@@ -398,23 +422,6 @@ abstract class AbstractLogger
             $this->columns = $columns;
         } else {
             $this->columns = array();
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * Set Log
-     *
-     * @return  $this
-     * @since   1.0.0
-     */
-    protected function saveLog()
-    {
-        if ($this->maintain_log === true) {
-            $this->log_entry_key = count($this->log);
-            $this->log[]         = $this->log_entry;
         }
 
         return $this;

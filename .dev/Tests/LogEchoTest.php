@@ -28,15 +28,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -47,9 +47,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -57,7 +58,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     protected function setUp()
     {
@@ -77,15 +82,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -96,9 +101,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -106,7 +112,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testEmergency()
     {
@@ -132,15 +142,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -151,9 +161,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -161,7 +172,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testAlert()
     {
@@ -186,15 +201,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -205,9 +220,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -215,7 +231,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testCritical()
     {
@@ -240,15 +260,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -259,9 +279,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -269,7 +290,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testError()
     {
@@ -294,15 +319,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -313,9 +338,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -323,7 +349,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testWarning()
     {
@@ -348,15 +378,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -367,9 +397,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -377,7 +408,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testNotice()
     {
@@ -402,15 +437,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -421,9 +456,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -431,7 +467,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testInfo()
     {
@@ -456,15 +496,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -475,9 +515,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -485,7 +526,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testDebugInfo()
     {
@@ -510,15 +555,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -529,9 +574,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -539,7 +585,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testLog()
     {
@@ -564,15 +614,15 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -583,9 +633,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -593,7 +644,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testClear()
     {
@@ -616,17 +671,18 @@ class EchoTest extends \PHPUnit_Framework_TestCase
 
         return $this;
     }
+
     /**
      * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
      * @covers Molajo\Log\Logger::startLoggers
      * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::stopLogger
      * @covers Molajo\Log\Logger::editLoggerType
      * @covers Molajo\Log\Logger::editLoggerName
      * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
      * @covers Molajo\Log\Logger::logLogger
      * @covers Molajo\Log\Logger::emergency
      * @covers Molajo\Log\Logger::alert
@@ -637,9 +693,10 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\EchoLogger::log
+     * @covers Molajo\Log\Adapter\Echologger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
@@ -647,7 +704,11 @@ class EchoTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testStopLogger()
     {

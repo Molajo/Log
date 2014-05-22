@@ -52,12 +52,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     protected function setUp()
     {
@@ -101,12 +107,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testEmergency()
     {
@@ -153,15 +165,22 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      *
      * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
+     *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testAlert()
     {
@@ -210,12 +229,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testCritical()
     {
@@ -264,12 +289,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testError()
     {
@@ -318,12 +349,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testWarning()
     {
@@ -372,12 +409,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testNotice()
     {
@@ -426,12 +469,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testInfo()
     {
@@ -480,12 +529,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testDebugInfo()
     {
@@ -534,12 +589,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testLog()
     {
@@ -588,12 +649,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testClear()
     {
@@ -642,12 +709,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
      * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
      * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
      * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
      * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
      * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
     public function testStopLogger()
     {

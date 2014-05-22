@@ -8,8 +8,6 @@
  */
 namespace Molajo\Log;
 
-use Exception;
-use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -104,7 +102,8 @@ class Logger implements LoggerInterface
     /**
      * Constructor
      *
-     * @param   array $logger_requests
+     * @param   array  $logger_requests
+     * @param   array  $logger_adapters
      *
      * @since   1.0.0
      */
@@ -156,10 +155,10 @@ class Logger implements LoggerInterface
      */
     public function startLogger($name, $logger_type, $levels = array(), $context = array())
     {
-        $logger_type          = $this->editLoggerType($logger_type);
-        $name                 = $this->editLoggerName($name, $logger_type);
+        $logger_type = $this->editLoggerType($logger_type);
+        $name        = $this->editLoggerName($name, $logger_type);
 
-        $loggerClass          = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type)) . 'Logger';
+        $loggerClass = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type)) . 'Logger';
 
         $loggerInstance       = new $loggerClass($context);
         $this->loggers[$name] = $loggerInstance;
