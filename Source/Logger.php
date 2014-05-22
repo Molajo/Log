@@ -31,7 +31,7 @@ class Logger implements LoggerInterface
      * @var    array
      * @since  1.0
      */
-    protected $logger_adapters = array('dummy', 'display', 'memory');
+    protected $logger_adapters = array('dummy', 'echo', 'memory');
 
     /**
      * RFC 5424 syslog protocol Logging levels
@@ -105,24 +105,15 @@ class Logger implements LoggerInterface
         );
 
     /**
-     * Timezone
-     *
-     * @var    DateTimeZone
-     * @since  1.0
-     */
-    protected $timezone = '';
-
-    /**
      * Constructor
      *
      * @param   array $logger_requests
      *
-     * @since   1.0
+     * @since   1.0.0
      */
     public function __construct(
         array $logger_requests = array()
     ) {
-        $this->timezone = new DateTimeZone(date_default_timezone_get() ? : 'UTC');
         $this->startLoggers($logger_requests);
     }
 
@@ -133,9 +124,9 @@ class Logger implements LoggerInterface
      *
      * @return  $this
      * @throws  \Psr\Log\InvalidArgumentException
-     * @since   1.0
+     * @since   1.0.0
      */
-    protected function startLoggers(array $logger_requests = array())
+    public function startLoggers(array $logger_requests = array())
     {
         if (count($logger_requests) > 0) {
             foreach ($logger_requests as $logger_request) {
@@ -160,16 +151,15 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function startLogger($name, $logger_type, $levels = array(), $context = array())
     {
-        $logger_type = $this->editLoggerType($logger_type);
-        $name        = $this->editLoggerName($name, $logger_type);
+        $logger_type          = $this->editLoggerType($logger_type);
+        $name                 = $this->editLoggerName($name, $logger_type);
 
-        $loggerClass    = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type)) . 'Logger';
-        $loggerInstance = new $loggerClass($context);
-
+        $loggerClass          = 'Molajo\\Log\\Adapter\\' . ucfirst(strtolower($logger_type)) . 'Logger';
+        $loggerInstance       = new $loggerClass($context);
         $this->loggers[$name] = $loggerInstance;
 
         $this->registerLoggerLevels($name, $levels);
@@ -178,60 +168,48 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * Edit Logger Type
+     * Get a specified log
      *
-     * @param   string $logger_type
-     *
-     * @return  string
-     * @since   1.0
+     * @return  array()
+     * @since   1.0.0
      */
-    protected function editLoggerType($logger_type)
+    public function getLog($name)
     {
-        $logger_type = strtolower($logger_type);
-
-        if (in_array($logger_type, $this->logger_adapters)) {
-        } else {
-            $logger_type = 'memory';
-        }
-
-        return $logger_type;
+        return $this->loggers[strtolower($name)]->getLog();
     }
 
     /**
-     * Edit Logger Name
-     *
-     * @param   string $name
-     * @param   string $logger_type
-     *
-     * @return  string
-     * @since   1.0
-     */
-    protected function editLoggerName($name, $logger_type)
-    {
-        $name = strtolower($name);
-
-        if ($name === '') {
-            $name = strtolower($logger_type);
-        }
-
-        return $name;
-    }
-
-    /**
-     * Edit Logger Levels
-     *
-     * @param   string $name
-     * @param   array  $levels
+     * Clear a specified log
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
-    protected function registerLoggerLevels($name, array $levels = array())
+    public function clearLog($name)
     {
-        foreach ($this->levels_by_loggers as $key => $list) {
-            if (in_array($key, $levels)) {
-                $list[] = $name;
-            }
+        return $this->loggers[strtolower($name)]->clearLog();
+    }
+
+    /**
+     * Logs with defined log level.
+     *
+     * @param   int    $level
+     * @param   string $message
+     * @param   array  $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    public function log($level, $message, array $context = array())
+    {
+        if (in_array($level, $this->levels)) {
+        } else {
+            $level = $this->levels_by_name['info'];
+        }
+
+        $context['log_level_name'] = $this->levels_by_code[$level];
+
+        foreach ($this->levels_by_loggers[$level] as $name) {
+            $this->logLogger($name, $level, $message, $context);
         }
 
         return $this;
@@ -243,8 +221,7 @@ class Logger implements LoggerInterface
      * @param   string $name
      *
      * @return  $this
-     * @throws  \Psr\Log\InvalidArgumentException
-     * @since   1.0
+     * @since   1.0.0
      */
     public function stopLogger($name)
     {
@@ -267,58 +244,73 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * Logs with defined log level.
+     * Edit Logger Type
      *
-     * @param   int    $level
-     * @param   string $message
-     * @param   array  $context
+     * @param   string $logger_type
+     *
+     * @return  string
+     * @since   1.0.0
+     */
+    protected function editLoggerType($logger_type)
+    {
+        $logger_type = strtolower($logger_type);
+
+        if (in_array($logger_type, $this->logger_adapters)) {
+        } else {
+            $logger_type = 'memory';
+        }
+
+        return $logger_type;
+    }
+
+    /**
+     * Edit Logger Name
+     *
+     * @param   string $name
+     * @param   string $logger_type
+     *
+     * @return  string
+     * @since   1.0.0
+     */
+    protected function editLoggerName($name, $logger_type)
+    {
+        $name = strtolower($name);
+
+        if ($name === '') {
+            $name = strtolower($logger_type);
+        }
+
+        return $name;
+    }
+
+    /**
+     * Edit Logger Levels
+     *
+     * @param   string $name
+     * @param   array  $levels
      *
      * @return  $this
-     * @throws  \Psr\Log\InvalidArgumentException
-     * @since   1.0
+     * @since   1.0.0
      */
-    public function log($level, $message, array $context = array())
+    protected function registerLoggerLevels($name, array $levels = array())
     {
-        if (in_array($level, $this->levels)) {
-        } else {
-            $level = $this->levels_by_name['info'];
+        $new_loggers = array();
+
+        foreach ($this->levels_by_loggers as $key => $list) {
+            if (in_array($key, $levels)) {
+                $list[] = $name;
+                array_unique($list);
+            }
+            $new_loggers[$key] = $list;
         }
 
-        $log_entry             = new stdClass();
-        $log_entry->level      = $level;
-        $log_entry->level_name = $this->levels_by_code[$level];
-        $log_entry->message    = $message;
-        $log_entry->context    = $context;
-        $log_entry             = $this->setLogDateTime($log_entry);
-
-        $context['log_entry'] = $log_entry;
-
-        foreach ($this->levels_by_loggers[$level] as $name) {
-            $this->logLogger($name, $level, $message, $context);
-        }
+        $this->levels_by_loggers = $new_loggers;
 
         return $this;
     }
 
     /**
-     * Set Datetime for Log entry
-     *
-     * @param  object $log_entry
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    protected function setLogDateTime($log_entry)
-    {
-        $date_time = new DateTime('now');
-        $date_time->setTimezone($this->timezone);
-        $log_entry->datetime = $date_time->format('Y-m-d H:i:s');
-
-        return $log_entry;
-    }
-
-    /**
-     * Log to a single logger registered for this level
+     * Log to the specified logger registered for this level
      *
      * @param   string $name
      * @param   int    $level
@@ -327,12 +319,12 @@ class Logger implements LoggerInterface
      *
      * @return  $this
      * @throws  \Psr\Log\InvalidArgumentException
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function logLogger($name, $level, $message, array $context = array())
     {
         try {
-            return $this->loggers[$name]->log($message, $level, $context);
+            return $this->loggers[$name]->log($level, $message, $context);
 
         } catch (Exception $e) {
 
@@ -349,7 +341,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function emergency($message, array $context = array())
     {
@@ -366,7 +358,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function alert($message, array $context = array())
     {
@@ -382,7 +374,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function critical($message, array $context = array())
     {
@@ -397,7 +389,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function error($message, array $context = array())
     {
@@ -414,7 +406,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function warning($message, array $context = array())
     {
@@ -428,7 +420,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function notice($message, array $context = array())
     {
@@ -444,7 +436,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function info($message, array $context = array())
     {
@@ -458,7 +450,7 @@ class Logger implements LoggerInterface
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function debug($message, array $context = array())
     {

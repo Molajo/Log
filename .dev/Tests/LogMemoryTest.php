@@ -1,6 +1,6 @@
 <?php
 /**
- * Dummy Log Test
+ * Log Test
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -12,14 +12,14 @@ use DateTime;
 use stdClass;
 
 /**
- * Dummy Log Test
+ * Log Test
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class DummyTest extends \PHPUnit_Framework_TestCase
+class MemoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Log Object
@@ -47,7 +47,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -64,7 +64,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $loggers                     = array();
         $logger_request              = new stdClass();
         $logger_request->name        = 'Test1';
-        $logger_request->logger_type = 'Dummy';
+        $logger_request->logger_type = 'Memory';
         $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
         $logger_request->context     = array();
         $loggers[]                   = $logger_request;
@@ -96,7 +96,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -118,7 +118,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
-        $this->assertFalse(is_array($results));
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('emergency', $row->level_name);
+        }
 
         return $this;
     }
@@ -144,7 +151,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -166,8 +173,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
-        $this->assertFalse(is_array($results));;
-
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('alert', $row->level_name);
+        }
         return $this;
     }
 
@@ -192,7 +205,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -214,8 +227,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
-        $this->assertFalse(is_array($results));;
-
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('critical', $row->level_name);
+        }
         return $this;
     }
 
@@ -240,7 +259,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -262,8 +281,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
-        $this->assertFalse(is_array($results));;
-
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('error', $row->level_name);
+        }
         return $this;
     }
 
@@ -288,7 +313,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -310,6 +335,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('warning', $row->level_name);
+        }
         return $this;
     }
 
@@ -334,7 +367,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -356,8 +389,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
-        $this->assertFalse(is_array($results));;
-
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('notice', $row->level_name);
+        }
         return $this;
     }
 
@@ -382,7 +421,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -404,6 +443,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('info', $row->level_name);
+        }
         return $this;
     }
 
@@ -428,7 +475,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -450,8 +497,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
-        $this->assertFalse(is_array($results));;
-
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('debug', $row->level_name);
+        }
         return $this;
     }
 
@@ -476,7 +529,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -498,6 +551,14 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->logger->getLog('Test1');
 
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($level, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('info', $row->level_name);
+        }
         return $this;
     }
 
@@ -522,7 +583,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -547,7 +608,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $this->logger->log($level, 'Hello 5', $context);
 
         $results = $this->logger->getLog('Test1');
-        $this->assertEquals(0, count($results));
+        $this->assertEquals(5, count($results));
 
         $results = $this->logger->clearLog('Test1');
         $results = $this->logger->getLog('Test1');
@@ -576,7 +637,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\DummyLogger::log
+     * @covers Molajo\Log\Adapter\MemoryLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog

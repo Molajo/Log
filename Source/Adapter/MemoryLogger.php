@@ -8,8 +8,6 @@
  */
 namespace Molajo\Log\Adapter;
 
-use stdClass;
-
 /**
  * Memory Logger
  *
@@ -21,36 +19,6 @@ use stdClass;
 class MemoryLogger extends AbstractLogger
 {
     /**
-     * Constructor
-     *
-     * @param   array $context
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function __construct(
-        $context = array()
-    ) {
-
-        parent::__construct($context);
-
-        return $this;
-    }
-
-    /**
-     * Establish connection to the Physical Logger
-     *
-     * @param   array $context
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function setLogger($context = array())
-    {
-        return $this;
-    }
-
-    /**
      * Log the message for the level given the data in context
      *
      * @param   mixed  $level
@@ -58,11 +26,11 @@ class MemoryLogger extends AbstractLogger
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function log($level, $message, array $context = array())
     {
-        $log_entry = parent::log($level, $message, $context);
+        parent::log($level, $message, $context);
 
         return $this;
     }

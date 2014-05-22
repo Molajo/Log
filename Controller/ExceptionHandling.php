@@ -55,7 +55,7 @@ class ExceptionHandling extends Exception
      * @param   int  $terminate
      *
      * @return  string
-     * @since   1.0
+     * @since   1.0.0
      */
     public function handleException(
         $title = null,

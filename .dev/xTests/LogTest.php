@@ -40,7 +40,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * Setup testing
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function setUp()
     {
@@ -61,7 +61,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @param   array $options
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testConnect()
     {
@@ -76,7 +76,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Log\Handler\File::connect
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testSet()
     {
@@ -94,7 +94,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Log\Handler\File::get
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testGet()
     {
@@ -117,7 +117,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @param   string $key
      *
      * @return  bool
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testRemove()
     {
@@ -132,7 +132,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * Clear all log
      *
      * @return  bool
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testClear()
     {
@@ -201,7 +201,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @param   array $keys
      *
      * @return  array
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testGetMultiple()
     {
@@ -261,7 +261,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @param   null|integer $ttl
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testSetMultiple($items = array(), $ttl = null)
     {
@@ -295,7 +295,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @param   array $keys
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testRemoveMultiple()
     {

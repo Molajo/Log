@@ -8,9 +8,6 @@
  */
 namespace Molajo\Log\Adapter;
 
-use stdClass;
-
-
 /**
  * Echo Logger
  *
@@ -29,11 +26,15 @@ class EchoLogger extends AbstractLogger
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function log($level, $message, array $context = array())
     {
-        $log_entry = parent::log($level, $message, $context);
+        parent::log($level, $message, $context);
+
+        echo '<pre>';
+        var_dump($this->log_entry);
+        echo '</pre>';
 
         return $this;
     }

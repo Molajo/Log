@@ -44,7 +44,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      * Instantiate Class
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
     public function instantiateClass()
@@ -69,7 +69,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      * Instantiate Log Adapter
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
     public function getAdapter($type)

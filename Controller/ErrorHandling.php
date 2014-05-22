@@ -89,7 +89,7 @@ class ErrorHandling implements ErrorHandlingInterface
      *
      * @return  object|stdClass
      * @throws  \CommonApi\Exception\ErrorThrownAsException
-     * @since   1.0
+     * @since   1.0.0
      */
     public function setError($error_number = 0, $message = '', $file = '', $line_number = '')
     {

@@ -8,6 +8,8 @@
  */
 namespace Molajo\Log\Adapter;
 
+use DateTime;
+use DateTimeZone;
 use stdClass;
 
 /**
@@ -21,17 +23,41 @@ use stdClass;
 abstract class AbstractLogger
 {
     /**
-     * Context
+     * Log
      *
      * @var    array
      * @since  1.0
      */
-    protected $context = array();
+    protected $log;
+
+    /**
+     * Maintain Local Log - turn off with $options['maintain_log'] = false when activating log
+     *
+     * @var    boolean
+     * @since  1.0
+     */
+    protected $maintain_log = true;
+
+    /**
+     * Log Entry
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $log_entry;
 
     /**
      * Datetime
      *
-     * @var    object
+     * @var    DateTime
+     * @since  1.0
+     */
+    protected $log_entry_key = '';
+
+    /**
+     * Datetime
+     *
+     * @var    DateTime
      * @since  1.0
      */
     protected $datetime = '';
@@ -53,44 +79,12 @@ abstract class AbstractLogger
     protected $started_time = 0.0;
 
     /**
-     * Elapsed time between now and started_time
-     *
-     * @var    float
-     * @since  1.0
-     */
-    protected $elapsed_time_from_start = 0.0;
-
-    /**
      * Compared to current time to determine elapsed time between operations
      *
      * @var    float
      * @since  1.0
      */
     protected $previous_time = 0.0;
-
-    /**
-     * Elapsed time between now and previous_time
-     *
-     * @var    float
-     * @since  1.0
-     */
-    protected $elapsed_time_from_previous = 0.0;
-
-    /**
-     * Current time
-     *
-     * @var    float
-     * @since  1.0
-     */
-    protected $current_time = 0.0;
-
-    /**
-     * Current Memory Usage
-     *
-     * @var    float
-     * @since  1.0
-     */
-    protected $memory = 0.0;
 
     /**
      * Compared to current memory settings to determine if additional allocation was required
@@ -101,31 +95,7 @@ abstract class AbstractLogger
     protected $previous_memory = 0.0;
 
     /**
-     * Difference in Memory Usage
-     *
-     * @var    float
-     * @since  1.0
-     */
-    protected $memory_difference = 0.0;
-
-    /**
-     * Formatted memory
-     *
-     * @var    float
-     * @since  1.0
-     */
-    protected $formatted_memory = 0.0;
-
-    /**
-     * Message
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $message;
-
-    /**
-     * Log Entry Fields
+     * Log Entry Fields - can be defined in sub child (ex. build from $context in constructor)
      *
      * @var    array
      * @since  1.0
@@ -133,50 +103,42 @@ abstract class AbstractLogger
     protected $log_entry_fields = array();
 
     /**
-     * Log
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $log;
-
-    /**
-     * Log Entry
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $log_entry;
-
-    /**
      * Constructor
      *
-     * @param   array $context
+     * @param   array $context  Use in subclass, if needed, when starting logger
      *
-     * @return  mixed
-     * @since   1.0
+     * @since   1.0.0
      */
     public function __construct(
         $context = array()
     ) {
-
-
+        $this->timezone = new DateTimeZone(date_default_timezone_get() ? : 'UTC');
+        $this->createLogEntryFields();
         $this->started_time  = $this->getMicrotimeFloat();
         $this->previous_time = $this->getMicrotimeFloat();
-
-        return $this;
     }
 
     /**
-     * Establish connection to the Physical Logger
+     * Get the Log
      *
-     * @param   array $context
+     * @return  array()
+     * @since   1.0.0
+     */
+    public function getLog()
+    {
+        return $this->log;
+    }
+
+    /**
+     * Clear the Log
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
-    public function setLogger($context = array())
+    public function clearLog()
     {
+        $this->log = array();
+
         return $this;
     }
 
@@ -188,40 +150,61 @@ abstract class AbstractLogger
      * @param   array  $context
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function log($level, $message, array $context = array())
     {
         $this->log_entry = new stdClass();
 
-        $this->log_entry->entry_date = date("Y-m-d") . ' ' . date("H:m:s");
-        $this->log_entry->level             = (int)$level;
-        $this->log_entry->message           = (string)$message;
-        $this->log_entry->context           = (string)$context;
+        $this->log_entry->entry_date = $this->setLogDateTime();
+        $this->log_entry->level      = (int)$level;
+        $this->log_entry->level_name = (string)$context['log_level_name'];
+        unset($context['log_level_name']);
+        $this->log_entry->message    = (string)$message;
 
         $this->calculateElapsedTime();
         $this->calculateMemoryUsage();
 
         if (count($this->log_entry_fields) > 0) {
-            $this->setLogEntryFields($this->log_entry);
+            $this->setLogEntryFields($context);
+        }
+
+        if ($this->maintain_log === true) {
+            $this->log_entry_key = count($this->log);
+            $this->log[] = $this->log_entry;
         }
 
         return $this;
     }
 
     /**
-     * Log the message for the level given the data in context
+     * Set Datetime for Log entry
+     *
+     * @return  DateTime
+     * @since   1.0.0
+     */
+    protected function setLogDateTime()
+    {
+        $date_time = new DateTime('now');
+        $date_time->setTimezone($this->timezone);
+
+        return $date_time->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Add the custom log entry fields to the log
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
-    public function setLogEntryFields()
+    protected function setLogEntryFields($context)
     {
-        foreach ($this->log_entry_fields as $field) {
-            if (isset($this->context[$field])) {
-                $this->log_entry->$field = $this->context[$field];
+        foreach ($this->log_entry_fields as $key => $value) {
+
+            if (isset($context[$key])) {
+                $this->log_entry->$key = $context[$key];
             } else {
-                $this->log_entry->$field = null;
+                $this->log_entry->$key = $value;
             }
         }
 
@@ -232,27 +215,27 @@ abstract class AbstractLogger
      * Calculate Elapsed Time
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function calculateElapsedTime()
     {
-        $this->current_time                          = $this->getMicrotimeFloat();
+        $current_time                                = $this->getMicrotimeFloat();
         $this->log_entry->started_time               = $this->started_time;
         $this->log_entry->previous_time              = $this->previous_time;
-        $this->log_entry->current_time               = $this->current_time;
-        $this->log_entry->elapsed_time_from_start    = $this->current_time - $this->started_time;
+        $this->log_entry->current_time               = $current_time;
+        $this->log_entry->elapsed_time_from_start    = $current_time - $this->started_time;
         $this->log_entry->formatted_time_from_start  = sprintf(
             '%.2f seconds (+%.2f)',
-            $this->elapsed_time_from_start,
-            $this->elapsed_time_from_start - $this->started_time
+            $this->log_entry->elapsed_time_from_start,
+            $this->log_entry->elapsed_time_from_start - $this->started_time
         );
-        $this->log_entry->elapsed_time_from_previous = $this->current_time - $this->previous_time;
+        $this->log_entry->elapsed_time_from_previous = $current_time - $this->previous_time;
         $this->log_entry->formatted_time_for_step    = sprintf(
             '%.2f seconds (+%.2f)',
-            $this->elapsed_time_from_previous,
-            $this->elapsed_time_from_previous - $this->previous_time
+            $this->log_entry->elapsed_time_from_previous,
+            $this->log_entry->elapsed_time_from_previous - $this->previous_time
         );
-        $this->previous_time                         = $this->current_time;
+        $this->previous_time                         = $current_time;
 
         return $this;
     }
@@ -261,9 +244,9 @@ abstract class AbstractLogger
      * Get the current time from: http://php.net/manual/en/function.microtime.php
      *
      * @return  float
-     * @since   1.0
+     * @since   1.0.0
      */
-    public function getMicrotimeFloat()
+    protected function getMicrotimeFloat()
     {
         list ($usec, $sec) = explode(' ', microtime());
 
@@ -274,32 +257,65 @@ abstract class AbstractLogger
      * Calculate Memory Usage
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function calculateMemoryUsage()
     {
-        $this->memory = 0;
+        $memory = 0;
 
         if (function_exists('memory_get_usage')) {
-            $this->memory = memory_get_usage(true) / 1048576;
+            $memory = memory_get_usage(true) / 1048576;
         }
 
-        if ($this->memory > $this->previous_memory) {
-            $this->memory_difference = $this->memory - $this->previous_memory;
+        if ($memory > $this->previous_memory) {
+            $memory_difference = $memory - $this->previous_memory;
         } else {
-            $this->memory_difference = 0;
+            $memory_difference = 0;
         }
 
-        $this->formatted_memory = sprintf(
-            '%0.2f MB (+%.3f)',
-            $this->memory,
-            $this->memory_difference
-        );
-
-        $this->log_entry->memory_usage      = $this->memory;
+        $this->log_entry->memory_usage      = $memory;
         $this->log_entry->previous_memory   = $this->previous_memory;
-        $this->log_entry->memory_difference = $this->memory_difference;
-        $this->log_entry->formatted_memory  = $this->memory_difference;
+        $this->log_entry->memory_difference = $memory_difference;
+        $this->log_entry->formatted_memory  = sprintf(
+            '%0.2f MB (+%.3f)',
+            $memory,
+            $memory_difference);
+
+        return $this;
+    }
+
+    /**
+     * Log the message for the level given the data in context
+     *
+     * @param   array  $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function createLogEntryFields(array $context = array())
+    {
+        if (count($context) > 0) {
+        } else {
+            return $this;
+        }
+
+        if (isset($context['log_entry_fields'])) {
+            $log_entry_fields = $context['log_entry_fields'];
+        } else {
+            $log_entry_fields = array();
+        }
+
+        if (count($log_entry_fields) > 0) {
+            foreach ($log_entry_fields as $key => $value) {
+                $this->log_entry->$key = $value;
+            }
+        }
+
+        if (isset($context['maintain_log']) && $context['maintain_log'] === false) {
+            $this->maintain_log = false;
+        } else {
+            $this->maintain_log = true;
+        }
 
         return $this;
     }
