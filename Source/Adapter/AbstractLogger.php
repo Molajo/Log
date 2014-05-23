@@ -331,6 +331,7 @@ abstract class AbstractLogger
 
         $this->createLogEntryFields($context);
         $this->setMaintainLog($context);
+        $this->setCallback($context);
         $this->setFileLocation($context);
         $this->setColumns($context);
 
@@ -378,6 +379,24 @@ abstract class AbstractLogger
             $this->maintain_log = false;
         } else {
             $this->maintain_log = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set Callback
+     *
+     * @param   array $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function setCallback(array $context)
+    {
+        if (isset($context['callback'])) {
+            $this->callback = $context['callback'];
+            unset($context['callback']);
         }
 
         return $this;

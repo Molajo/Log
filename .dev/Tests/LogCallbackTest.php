@@ -8,7 +8,6 @@
  */
 namespace Molajo\Log\Adapter;
 
-use DateTime;
 use stdClass;
 
 /**
@@ -19,7 +18,7 @@ use stdClass;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class LogTest extends \PHPUnit_Framework_TestCase
+class CallbackTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Log Object
@@ -47,7 +46,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\FileLogger::log
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -67,18 +66,22 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $loggers                                  = array();
-        $logger_request                           = new stdClass();
-        $logger_request->name                     = 'Test1';
-        $logger_request->logger_type              = 'File';
-        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                  = array();
-        $logger_request->context['file_location'] = __DIR__ . '/FileLog.json';
-        $loggers[]                                = $logger_request;
-        $class                                    = 'Molajo\\Log\\Logger';
-        $this->logger                             = new $class($loggers);
+        $loggers                             = array();
+        $logger_request                      = new stdClass();
+        $logger_request->name                = 'Test1';
+        $logger_request->logger_type         = 'Callback';
+        $logger_request->levels              = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context             = array();
 
-        return;
+        $logging = function ($log_entry) {
+            $this->assertEquals(19, strlen($log_entry->entry_date));
+        };
+
+        $logger_request->context['callback'] = $logging;
+        $loggers[]                           = $logger_request;
+
+        $class        = 'Molajo\\Log\\Logger';
+        $this->logger = new $class($loggers);
     }
 
     /**
@@ -102,7 +105,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\FileLogger::log
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -120,81 +123,13 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
-    public function testSendInAdapterList()
+    public function testEmergency()
     {
-        $loggers                                  = array();
-        $logger_request                           = new stdClass();
-        $logger_request->name                     = 'Test1';
-        $logger_request->logger_type              = 'File';
-        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                  = array();
-        $logger_request->context['file_location'] = __DIR__ . '/FileLog.json';
-        $loggers[]                                = $logger_request;
-        $logger_adapters                          = array('dummy', 'memory');
-        $class                                    = 'Molajo\\Log\\Logger';
-        $this->logger                             = new $class($loggers, $logger_adapters);
-
         $level   = 600;
         $message = 'Hello';
         $context = array();
 
-        $this->logger->emergency($message, $context);
-
-        $results = json_decode(file_get_contents(__DIR__ . '/FileLog.json'));
-
-        $this->assertTrue(is_array($results));
-        foreach ($results as $row) {
-            $this->assertEquals(19, strlen($row->entry_date));
-            $this->assertEquals(1, count($results));
-            $this->assertEquals($level, $row->level);
-            $this->assertEquals($message, $row->message);
-            $this->assertEquals('emergency', $row->level_name);
-        }
-        return $this;
-    }
-
-    /**
-     * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
-     * @covers Molajo\Log\Logger::startLoggers
-     * @covers Molajo\Log\Logger::startLogger
-     * @covers Molajo\Log\Logger::editLoggerType
-     * @covers Molajo\Log\Logger::editLoggerName
-     * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
-     * @covers Molajo\Log\Logger::logLogger
-     * @covers Molajo\Log\Logger::emergency
-     * @covers Molajo\Log\Logger::alert
-     * @covers Molajo\Log\Logger::critical
-     * @covers Molajo\Log\Logger::error
-     * @covers Molajo\Log\Logger::warning
-     * @covers Molajo\Log\Logger::notice
-     * @covers Molajo\Log\Logger::info
-     * @covers Molajo\Log\Logger::debug
-     *
-     * @covers Molajo\Log\Adapter\MemoryLogger::log
-     *
-     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
-     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
-     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
-     * @covers Molajo\Log\Adapter\AbstractLogger::log
-     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
-     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
-     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
-     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
-     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
-     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
-     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
-     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
-     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
-     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
-     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
-     */
-    public function testStopLoggerDoesNotExist()
-    {
-        $this->logger->stopLogger('this-does-not-exist');
+        $results = $this->logger->emergency($message, $context);
 
         return $this;
     }
@@ -220,7 +155,8 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\MemoryLogger::log
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -238,45 +174,364 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
-    public function testLogEntryFields()
+    public function testAlert()
     {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'Memory';
-        $logger_request->levels                      = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                     = array();
-        $log_entry_fields                            = array();
-        $log_entry_fields['column1']                 = 1;
-        $log_entry_fields['column2']                 = 2;
-        $log_entry_fields['column3']                 = 3;
-        $logger_request->context['log_entry_fields'] = $log_entry_fields;
+        $level   = 550;
+        $message = 'Hello';
+        $context = array();
 
-        $loggers[]    = $logger_request;
-        $class        = 'Molajo\\Log\\Logger';
-        $this->logger = new $class($loggers);
+        $this->logger->alert($message, $context);
 
+        return $this;
+    }
 
-        $level              = 200;
-        $message            = 'Hello';
-        $context            = array();
-        $context['column1'] = 'this is sent in with the log record';
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testCritical()
+    {
+        $level   = 500;
+        $message = 'Hello';
+        $context = array();
+
+        $this->logger->critical($message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testError()
+    {
+        $level   = 400;
+        $message = 'Hello';
+        $context = array();
+
+        $this->logger->error($message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testWarning()
+    {
+        $level   = 300;
+        $message = 'Hello';
+        $context = array();
+
+        $this->logger->warning($message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testNotice()
+    {
+        $level   = 250;
+        $message = 'Hello';
+        $context = array();
+
+        $this->logger->notice($message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testInfo()
+    {
+        $level   = 200;
+        $message = 'Hello';
+        $context = array();
+
+        $this->logger->info($message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testDebugInfo()
+    {
+        $level   = 100;
+        $message = 'Hello';
+        $context = array();
+
+        $this->logger->debug($message, $context);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Log\Logger::__construct
+     * @covers Molajo\Log\Logger::getLog
+     * @covers Molajo\Log\Logger::clearLog
+     * @covers Molajo\Log\Logger::startLoggers
+     * @covers Molajo\Log\Logger::startLogger
+     * @covers Molajo\Log\Logger::editLoggerType
+     * @covers Molajo\Log\Logger::editLoggerName
+     * @covers Molajo\Log\Logger::registerLoggerLevels
+     * @covers Molajo\Log\Logger::stopLogger
+     * @covers Molajo\Log\Logger::log
+     * @covers Molajo\Log\Logger::logLogger
+     * @covers Molajo\Log\Logger::emergency
+     * @covers Molajo\Log\Logger::alert
+     * @covers Molajo\Log\Logger::critical
+     * @covers Molajo\Log\Logger::error
+     * @covers Molajo\Log\Logger::warning
+     * @covers Molajo\Log\Logger::notice
+     * @covers Molajo\Log\Logger::info
+     * @covers Molajo\Log\Logger::debug
+     *
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
+     *
+     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
+     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::log
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
+     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
+     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
+     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
+     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
+     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
+     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
+     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
+     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
+     */
+    public function testLog()
+    {
+        $level   = 200;
+        $message = 'Hello';
+        $context = array();
 
         $this->logger->log($level, $message, $context);
 
-        $results = $this->logger->getLog('Test1');
-
-        $this->assertTrue(is_array($results));
-        foreach ($results as $row) {
-            $this->assertEquals(19, strlen($row->entry_date));
-            $this->assertEquals(1, count($results));
-            $this->assertEquals($level, $row->level);
-            $this->assertEquals($message, $row->message);
-            $this->assertEquals('info', $row->level_name);
-            $this->assertEquals('this is sent in with the log record', $row->column1);
-            $this->assertEquals(2, $row->column2);
-            $this->assertEquals(3, $row->column3);
-        }
         return $this;
     }
 
@@ -301,7 +556,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\MemoryLogger::log
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -319,30 +574,17 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
-    public function testDoNotMaintainLog()
+    public function testClear()
     {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'File';
-        $logger_request->levels                      = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                     = array();
-        $logger_request->context['maintain_log']     = false;
+        $level   = 200;
+        $message = 'Hello';
+        $context = array();
 
-        $loggers[]    = $logger_request;
-        $class        = 'Molajo\\Log\\Logger';
-        $this->logger = new $class($loggers);
-
-        $level              = 200;
-        $message            = 'Hello';
-        $context            = array();
-        $context['column1'] = 'this is sent in with the log record';
-
-        $this->logger->log($level, $message, $context);
-
-        $results = $this->logger->getLog('Test1');
-
-        $this->assertEquals(0, count($results));
+        $this->logger->log($level, 'Hello 1', $context);
+        $this->logger->log($level, 'Hello 2', $context);
+        $this->logger->log($level, 'Hello 3', $context);
+        $this->logger->log($level, 'Hello 4', $context);
+        $this->logger->log($level, 'Hello 5', $context);
 
         return $this;
     }
@@ -368,7 +610,7 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Logger::info
      * @covers Molajo\Log\Logger::debug
      *
-     * @covers Molajo\Log\Adapter\MemoryLogger::log
+     * @covers Molajo\Log\Adapter\CallbackLogger::log
      *
      * @covers Molajo\Log\Adapter\AbstractLogger::__construct
      * @covers Molajo\Log\Adapter\AbstractLogger::getLog
@@ -386,96 +628,9 @@ class LogTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
      * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
      */
-    public function testDoMaintainLog()
+    public function testStopLogger()
     {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'File';
-        $logger_request->levels                      = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                     = array();
-        $logger_request->context['maintain_log']     = true;
-
-        $loggers[]    = $logger_request;
-        $class        = 'Molajo\\Log\\Logger';
-        $this->logger = new $class($loggers);
-
-        $level              = 200;
-        $message            = 'Hello';
-        $context            = array();
-        $context['column1'] = 'this is sent in with the log record';
-
-        $this->logger->log($level, $message, $context);
-
-        $results = $this->logger->getLog('Test1');
-
-        $this->assertEquals(1, count($results));
-
-        return $this;
-    }
-
-    /**
-     * @covers Molajo\Log\Logger::__construct
-     * @covers Molajo\Log\Logger::getLog
-     * @covers Molajo\Log\Logger::clearLog
-     * @covers Molajo\Log\Logger::startLoggers
-     * @covers Molajo\Log\Logger::startLogger
-     * @covers Molajo\Log\Logger::editLoggerType
-     * @covers Molajo\Log\Logger::editLoggerName
-     * @covers Molajo\Log\Logger::registerLoggerLevels
-     * @covers Molajo\Log\Logger::setLoggerLevels
-     * @covers Molajo\Log\Logger::setDefaultLoggerLevel
-     * @covers Molajo\Log\Logger::stopLogger
-     * @covers Molajo\Log\Logger::log
-     * @covers Molajo\Log\Logger::logLogger
-     * @covers Molajo\Log\Logger::emergency
-     * @covers Molajo\Log\Logger::alert
-     * @covers Molajo\Log\Logger::critical
-     * @covers Molajo\Log\Logger::error
-     * @covers Molajo\Log\Logger::warning
-     * @covers Molajo\Log\Logger::notice
-     * @covers Molajo\Log\Logger::info
-     * @covers Molajo\Log\Logger::debug
-     *
-     * @covers Molajo\Log\Adapter\MemoryLogger::log
-     *
-     * @covers Molajo\Log\Adapter\AbstractLogger::__construct
-     * @covers Molajo\Log\Adapter\AbstractLogger::getLog
-     * @covers Molajo\Log\Adapter\AbstractLogger::clearLog
-     * @covers Molajo\Log\Adapter\AbstractLogger::log
-     * @covers Molajo\Log\Adapter\AbstractLogger::setLogDateTime
-     * @covers Molajo\Log\Adapter\AbstractLogger::setLogEntryFields
-     * @covers Molajo\Log\Adapter\AbstractLogger::calculateElapsedTime
-     * @covers Molajo\Log\Adapter\AbstractLogger::getMicrotimeFloat
-     * @covers Molajo\Log\Adapter\AbstractLogger::calculateMemoryUsage
-     * @covers Molajo\Log\Adapter\AbstractLogger::processContextArray
-     * @covers Molajo\Log\Adapter\AbstractLogger::createLogEntryFields
-     * @covers Molajo\Log\Adapter\AbstractLogger::setMaintainLog
-     * @covers Molajo\Log\Adapter\AbstractLogger::setFileLocation
-     * @covers Molajo\Log\Adapter\AbstractLogger::setColumns
-     * @covers Molajo\Log\Adapter\AbstractLogger::saveLog
-     */
-    public function testNoLogLevel()
-    {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'File';
-        $logger_request->levels                      = array();
-        $logger_request->context                     = array();
-
-        $loggers[]    = $logger_request;
-        $class        = 'Molajo\\Log\\Logger';
-        $this->logger = new $class($loggers);
-
-        $message            = 'Hello';
-        $context            = array();
-
-        $this->logger->info($message);
-
-        $results = $this->logger->getLog('Test1');
-
-        $this->assertEquals(1, count($results));
+        $this->logger->stopLogger('test1');
 
         return $this;
     }

@@ -26,7 +26,7 @@ class Logger implements LoggerInterface
      * @var    array
      * @since  1.0
      */
-    protected $logger_adapters = array('dummy', 'echo', 'errorlog', 'file', 'memory');
+    protected $logger_adapters = array('callback', 'database', 'dummy', 'echo', 'errorlog', 'file', 'memory');
 
     /**
      * RFC 5424 syslog protocol Logging levels
@@ -295,17 +295,59 @@ class Logger implements LoggerInterface
      */
     protected function registerLoggerLevels($name, array $levels = array())
     {
+        $new_loggers = $this->setLoggerLevels($name, $levels);
+
+        if (count($new_loggers) === 0) {
+            $this->setDefaultLoggerLevel($name);
+        } else {
+            $this->levels_by_loggers = $new_loggers;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set Logger Levels
+     *
+     * @param   string  $name
+     * @param   array   $levels
+     *
+     * @return  array
+     */
+    protected function setLoggerLevels($name, array $levels)
+    {
+        $found = false;
         $new_loggers = array();
 
         foreach ($this->levels_by_loggers as $key => $list) {
             if (in_array($key, $levels)) {
                 $list[] = $name;
                 array_unique($list);
+                $found = true;
             }
             $new_loggers[$key] = $list;
         }
 
-        $this->levels_by_loggers = $new_loggers;
+        if ($found === true) {
+            return $new_loggers;
+        }
+
+        return array();
+    }
+
+    /**
+     * Level not defined for Logger -- default to info
+     *
+     * @param   string $name
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function setDefaultLoggerLevel($name)
+    {
+        $default                      = $this->levels_by_loggers[200];
+        $default[]                    = $name;
+        $this->levels_by_loggers[200] = $default;
 
         return $this;
     }
