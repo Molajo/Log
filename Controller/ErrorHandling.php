@@ -119,6 +119,14 @@ class ErrorHandling implements ErrorHandlingInterface
         );
 
     /**
+     * Log Level - used for assignment processes
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $log_level = null;
+
+    /**
      * Class Constructor
      *
      * @param  LoggerInterface $logger_instance (PSR-3 compliant Logger)
@@ -157,10 +165,10 @@ class ErrorHandling implements ErrorHandlingInterface
             return true; // Neither this class, nor PHP will process
         }
 
-        $level = (int) $this->setLogLevel($error_number, $context);
+        $this->setLogLevel($error_number, $context);
 
         /** 2. Errors mapped to a Log Level of 0 are to be processed by PHP */
-        if ($level === 0) {
+        if ($this->log_level === 0) {
             return false; // Tell PHP to handle this error
         }
 
@@ -168,12 +176,12 @@ class ErrorHandling implements ErrorHandlingInterface
         $context = $this->createLogContextArray($file, $line_number, $context);
 
         /** 3. Errors mapped to a Log Level higher than 600 are to be thrown as PHP Exceptions */
-        if ($level > 600) {
-            $this->throwErrorException($level, $message, $file, $line_number);
+        if ($this->log_level > 600) {
+            $this->throwErrorException($error_number, $message, $file, $line_number);
         }
 
         /** 4. Remaining Errors are logged using a PSR-3 compliant logger */
-        $this->log($level, $message, $context);
+        $this->log($this->log_level, $message, $context);
 
         return true; // Tell PHP not to handle this error
     }
@@ -198,23 +206,6 @@ class ErrorHandling implements ErrorHandlingInterface
     }
 
     /**
-     * Determine if error number is within the range
-     *
-     * @param   integer $level
-     * @param   string  $message
-     * @param   string  $file
-     * @param   integer $line_number
-     *
-     * @return  boolean
-     * @since   1.0.0
-     * @throws  ErrorException
-     */
-    protected function throwErrorException($level, $message, $file, $line_number)
-    {
-        throw new ErrorException($message, 0, $level, $file, $line_number);
-    }
-
-    /**
      * Set Log Level -- using PHP Error Code to PSR Log Level mapping
      *
      * The `log_level` associated with the `error_number` in the `error_number_array` is used. The array
@@ -225,7 +216,7 @@ class ErrorHandling implements ErrorHandlingInterface
      * @param   int   $error_number
      * @param   array $context
      *
-     * @return  integer
+     * @return  $this
      * @since   1.0.0
      */
     protected function setLogLevel($error_number, array $context = array())
@@ -233,13 +224,10 @@ class ErrorHandling implements ErrorHandlingInterface
         $results = $this->setLogLevelMoreControl($context);
 
         if ($results === false) {
-        } else {
-            $log_level = (int) $results;
-
-            return $log_level;
+            $this->setLogLevelUsingMapping($error_number);
         }
 
-        return (int) $this->setLogLevelUsingMapping($error_number);
+        return $this;
     }
 
     /**
@@ -261,7 +249,7 @@ class ErrorHandling implements ErrorHandlingInterface
      *
      * @param   array $context
      *
-     * @return  mixed|boolean|integer
+     * @return  boolean
      * @since   1.0.0
      */
     protected function setLogLevelMoreControl(array $context = array())
@@ -278,16 +266,18 @@ class ErrorHandling implements ErrorHandlingInterface
      *
      * @param   int $error_number
      *
-     * @return  integer
+     * @return  boolean
      * @since   1.0.0
      */
     protected function setLogLevelUsingMapping($error_number)
     {
+        $log_level = 0;
+
         if (isset($this->error_number_array[$error_number])) {
-            return $this->validateLogLevel($this->error_number_array[$error_number], true);
+            $log_level = $this->error_number_array[$error_number];
         }
 
-        return 0; // pass on to PHP for processing
+        return $this->validateLogLevel($log_level, true);
     }
 
     /**
@@ -300,24 +290,28 @@ class ErrorHandling implements ErrorHandlingInterface
      * @param   integer $log_level
      * @param   boolean $set_default
      *
-     * @return  mixed|boolean|integer
+     * @return  boolean
      * @since   1.0.0
      */
     protected function validateLogLevel($log_level, $set_default = false)
     {
         if (in_array($log_level, $this->levels)) {
-            return $log_level;
+            $this->log_level = $log_level;
+            return true;
         }
 
         if ($log_level > 600) { // throw PHP Exception
-            return 999;
+            $this->log_level = 999;
+            return true;
         }
 
         if ($set_default === false) {
-            return $log_level;
+            return false;
         }
 
-        return 0;   //passes on to PHP
+        $this->log_level = 0; //passes on to PHP
+
+        return true;
     }
 
     /**
@@ -378,5 +372,22 @@ class ErrorHandling implements ErrorHandlingInterface
         $this->logger_instance->log($level, $message, $context);
 
         return $this;
+    }
+
+    /**
+     * Throw exception for PHP Error
+     *
+     * @param   integer $error_number
+     * @param   string  $message
+     * @param   string  $file
+     * @param   integer $line_number
+     *
+     * @return  boolean
+     * @since   1.0.0
+     * @throws  ErrorException
+     */
+    protected function throwErrorException($error_number, $message, $file, $line_number)
+    {
+        throw new ErrorException($message, 0, $error_number, $file, $line_number);
     }
 }
