@@ -15,46 +15,36 @@ use Psr\Log\LoggerInterface;
 /**
  * Customizable PHP Error Handling for converting PHP Errors into PSR-3 Log entries or PHP Exceptions
  *
- * By using PHP's trigger_error functionality and providing a mapping from the Error Codes to Log Levels,
- *  an application can avoid adding a dependency for a Logging Class in those classes that require logging.
- *  Instead, this class can be used to intercept and convert the trigger_error data to either a Log Entry
- *  or to a PHP Exception.
+ * Uses PHP's trigger_error functionality for logging to avoid class dependency for a Logging Class.
+ *  PHP routes triggered errors to the `setError` method in this class which can be handled as a log entry,
+ *  an exception, or ignored and passed on to PHP for processing. The benefit is no dependency on the Logger
+ *  class within application classes. Each class can focus on its specific responsibility and this class
+ *  interacts with the logger class.
  *
- * 1. Set ErrorHandling::setError as the PHP error_handler
+ * How to use:
+ *
+ * 1. Set the `setError` method of this class as the PHP error_handler for the application.
+ *
+ *    set_error_handler(array($this->error_handler, 'setError'));
  *
  * @link       http://us2.php.net/manual/en/function.set-error-handler.php
  *
- * 2. Inject this ErrorHandling class with any PSR-3 compliant Logger Interface
+ * 2. Inject a PSR-3 compliant Logger Interface (ex., Molajo Log or Monolog) as the logger_instance for this class
  *
  * @link       https://github.com/Molajo/Log
  *
- * 3. Review $error_number_array which can be used, as is, or customized, as needed
+ * 3. How is `log_level` assigned for the error before adding a log entry? See `setLogLevel` method for more.
  *
- *      a. Use the existing $error_number_array, as defined below (and ignore the next step, 3b.)
+ *      a. Uses `log_level` within $options, if located.
+ *      b. Uses the injected $error_number_array assignments injected during class construction
+ *      c. Uses existing $error_number_array to map the PHP Error Number to a PSR-3 Log Level.
  *
- *      b. -or- Modify the $error_number_array assignments and inject the array during class construction.
- *          The array map PHP Error Numbers (ex. E_NOTICE, E_USER_WARNING) to either the PSR-3 Log Level or to
- *          instead throw a PHP Error Exception. Each PHP Error number in the $error_number_array
- *          must be assigned to a PSR-3 Log Levels or to '999' for a PHP Exception
+ * 4. To use within the application, set errors using the PHP `trigger_error` function. There is no need
+ *    to inject a logging class in the application classes. This class will interact with the Log class.
  *
- * 4. To use within the application, set errors using the `trigger_error` function.
+ *    trigger_error('This is the message', E_USER_NOTICE);
  *
  * @link       http://php.net/manual/en/function.trigger-error.php
- *
- *       PHP will direct errors to the function defined as the error_handler (i.e., ErrorHandling::setError)
- *
- *       Example 1 simple message and error code:
- *
- *          trigger_error('This is the message', E_USER_NOTICE);
- *
- *       Example 2 use the $context array to assign the Log Level and provide data values to be used in log
- *REDO THIS EXPLANATION - trigger_error can only send 2
- *          $context = array();
- *          $context['log_level'] = 200;
- *          $context['userid']    = 1;
- *          $context['action']    = 'logon';
- *
- *          trigger_error('This is another message', E_ERROR, $context=$value);
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -101,7 +91,12 @@ class ErrorHandling implements ErrorHandlingInterface
     /**
      * Error Code Array - use default assignments or inject custom $error_number_array
      *
-     * @var    boolean
+     * Array lists all PHP Error numbers and maps the values to a PSR-3 Log Level.
+     * To allow PHP to handle the error, enter a value of '0` for the mapping. (Then, this class will ignore.)
+     * To throw a PHP Error Exception for errors with a specific error number(s), set the mapped value to `999.`
+     * This error number to log level assignments array can be overridden during class construction.
+     *
+     * @var    array
      * @since  1.0
      * @link   http://php.net/manual/en/errorfunc.constants.php
      */
@@ -121,8 +116,8 @@ class ErrorHandling implements ErrorHandlingInterface
     /**
      * Class Constructor
      *
-     * @param  LoggerInterface $logger_instance
-     * @param  array           $error_number_array
+     * @param  LoggerInterface $logger_instance    PSR-3 compliant Logger
+     * @param  array           $error_number_array Only to override default error code to log level assignments
      *
      * @since  1.0
      */
@@ -138,7 +133,7 @@ class ErrorHandling implements ErrorHandlingInterface
     }
 
     /**
-     * Method is called by PHP for errors if it has been assigned the PHP set_error_handler in the application
+     * Method is called by PHP when assigned as the `set_error_handler` for the application
      *
      * @param   integer $error_number
      * @param   string  $message
@@ -152,21 +147,30 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     public function setError($error_number, $message, $file, $line_number, array $context = array())
     {
+        /** 1. Does not fit criteria defined by error_reporting() PHP.ini settings */
         if ($this->respectErrorReporting($error_number) === false) {
-            return true; // Bypass PHP Error Handling
+            return true; // Neither this class, nor PHP will process
         }
 
-        $level   = $this->setLogLevel($error_number, $context);
+        $level = $this->setLogLevel($error_number, $context);
+
+        /** 2. Errors mapped to a Log Level of 0 are to be processed by PHP */
+        if ($level === 0) {
+            return false; // Tell PHP to handle this error
+        }
+
         $message = (string)$message;
         $context = $this->createLogContextArray($file, $line_number, $context);
 
+        /** 3. Errors mapped to a Log Level higher than 600 are to be thrown as PHP Exceptions */
         if ($level > 600) {
             $this->throwErrorException($level, $message, $file, $line_number);
         }
 
+        /** 4. Remaining Errors are logged using a PSR-3 compliant logger */
         $this->log($level, $message, $context);
 
-        return true; // Bypass PHP Error Handling
+        return true; // Tell PHP not to handle this error
     }
 
     /**
@@ -180,12 +184,12 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     protected function respectErrorReporting($error_number)
     {
-//        if (!(error_reporting() & $error_number)) {
-  //          // This error code is not included in error_reporting
-    //        return false;
-      //  }
+        if (error_reporting() & $error_number) {
+            return true; // within scope
+        }
 
-        return true;
+        // This error code is not included in error_reporting, ignore
+        return false;
     }
 
     /**
@@ -206,7 +210,12 @@ class ErrorHandling implements ErrorHandlingInterface
     }
 
     /**
-     * Set Log Level
+     * Set Log Level -- using PHP Error Code to PSR Log Level mapping
+     *
+     * The `log_level` associated with the `error_number` in the `error_number_array` is used. The array
+     * can be customized and injected into the class during class construction.
+     *
+     * For finer `log_level` assignment, see `setLogLevelMoreControl`
      *
      * @param   int   $error_number
      * @param   array $context
@@ -216,35 +225,42 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     protected function setLogLevel($error_number, array $context = array())
     {
-        $log_level = $this->setSpecificLogLevel($context);
+        $log_level = $this->setLogLevelMoreControl($context);
 
         if ($log_level === false) {
         } else {
             return $log_level;
         }
 
-        return $this->setMappedLogLevel($error_number);
+        return $this->setLogLevelUsingMapping($error_number);
     }
 
     /**
-     * Set Log Level using trigger_error $context['log_level'], if exists
+     * Set Log Level -- more control
+     *
+     * For default PHP Error Code to PSR Log Level mapping, see `setLogLevel`
+     *
+     * For finer `log_level` assignment, set a local variable `log_level` equal to the log level desired
+     *  *before* triggering the error within the local scope of the triggering method. In such a case,
+     *  the `log_level` will be within the `context` array and used for logging.
+     *
+     * Example (within the local scope of the triggering method):
+     *
+     *      protected function triggerError()
+     *      {
+     *          $log_level = 200;   // PHP will include within the $context array.
+     *          trigger_error('This is the message', E_USER_NOTICE);
+     *      }
      *
      * @param   array $context
      *
      * @return  mixed|boolean|integer
      * @since   1.0.0
      */
-    protected function setSpecificLogLevel(array $context = array())
+    protected function setLogLevelMoreControl(array $context = array())
     {
         if (isset($context['log_level'])) {
-        } else {
-            return false;
-        }
-
-        $log_level = $context['log_level'];
-
-        if (in_array($log_level, $this->levels)) {
-            return $log_level;
+            return $this->validateLogLevel($context['log_level']);
         }
 
         return false;
@@ -258,18 +274,68 @@ class ErrorHandling implements ErrorHandlingInterface
      * @return  integer
      * @since   1.0.0
      */
-    protected function setMappedLogLevel($error_number)
+    protected function setLogLevelUsingMapping($error_number)
     {
         if (isset($this->error_number_array[$error_number])) {
-        } else {
-            return $this->error_number_array[E_ERROR];
+            return $this->validateLogLevel($this->error_number_array[$error_number], true);
         }
 
-        return $this->error_number_array[$error_number];
+        return 0; // pass on to PHP for processing
     }
 
     /**
-     * Transfer existing context, $file, and $line_number to log $context array
+     * Validate Log Level
+     *
+     * 1. Matches a valid log_level, use it.
+     * 2. A value above 600 (maximum log level value), indicates a PHP Exception should be thrown.
+     * 3. A value of 0 (default) means allow PHP to handle it.
+     *
+     * @param   integer $log_level
+     * @param   boolean $set_default
+     *
+     * @return  mixed|boolean|integer
+     * @since   1.0.0
+     */
+    protected function validateLogLevel($log_level, $set_default = false)
+    {
+        $validated_log_level = false;
+
+        if (in_array($log_level, $this->levels)) {
+            $validated_log_level = $log_level;
+        }
+
+        if ($log_level === 0) { // pass on to PHP for processing
+            $validated_log_level = 0;
+        }
+
+        if ($log_level > 600) { // throw PHP Exception
+            $validated_log_level = 999;
+        }
+
+        if ($validated_log_level === false && $set_default === true) {
+            $validated_log_level = 0;   // pass on to PHP for processing
+        }
+
+        return $validated_log_level;
+    }
+
+    /**
+     * Transfer scalar properties within the $context array, along with the $file, and $line_number
+     *  values to the log $context array
+     *
+     * Example (within the local scope of the triggering method):
+     *
+     *      protected function triggerError()
+     *      {
+     *          // scalar local variables will be passed on to the logger
+     *          $log_level = 200;
+     *          $employee_name = $this->employee_name;
+     *          $another_thing = 'goes here';
+     *
+     *          trigger_error('This is the message', E_USER_NOTICE);
+     *      }
+     *
+     * @param   array   $context
      *
      * @param   string  $file
      * @param   integer $line_number
@@ -282,12 +348,11 @@ class ErrorHandling implements ErrorHandlingInterface
     {
         $new_context = array();
 
-        if (count($context) > 0) {
-            foreach ($context as $key => $value) {
-                if ($key === 'log_level') {
-                } else {
-                    $new_context[$key] = $value;
-                }
+        foreach ($context as $key => $value) {
+            if ($key === 'log_level') {
+
+            } elseif (is_scalar($value)) {
+                $new_context[$key] = $value;
             }
         }
 

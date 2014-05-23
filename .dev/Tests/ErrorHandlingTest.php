@@ -10,8 +10,8 @@ namespace Molajo\Controller;
 
 use CommonApi\Controller\ErrorHandlingInterface;
 use Molajo\Log\Logger;
-use stdClass;
 use Psr\Log\LoggerInterface;
+use stdClass;
 
 /**
  * Error Handling to PSR-3 Log Testing
@@ -39,8 +39,9 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
      * @covers Molajo\Controller\ErrorHandling::throwErrorException
      * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setSpecificLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setMappedLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
      * @covers Molajo\Controller\ErrorHandling::createLogContextArray
      * @covers Molajo\Controller\ErrorHandling::log
      */
@@ -67,14 +68,15 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
      * @covers Molajo\Controller\ErrorHandling::throwErrorException
      * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setSpecificLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setMappedLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
      * @covers Molajo\Controller\ErrorHandling::createLogContextArray
      * @covers Molajo\Controller\ErrorHandling::log
      */
     public function testTriggerError()
     {
-        $level          = 200;
+        $log_level      = 200;
         $message        = 'Person logged on.';
         $context        = array();
         $context['dog'] = 'food';
@@ -87,14 +89,13 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
         foreach ($results as $row) {
             $this->assertEquals(19, strlen($row->entry_date));
             $this->assertEquals(1, count($results));
-            $this->assertEquals($level, $row->level);
+            $this->assertEquals($log_level, $row->level);
             $this->assertEquals($message, $row->message);
             $this->assertEquals('info', $row->level_name);
         }
 
         return $this;
     }
-
 }
 
 class MockErrorHandling extends ErrorHandling implements ErrorHandlingInterface
@@ -123,15 +124,15 @@ class MockLogger extends Logger implements LoggerInterface
     /**
      * Logs with defined log level.
      *
-     * @param   int    $level
+     * @param   int    $log_level
      * @param   string $message
      * @param   array  $context
      *
      * @return  $this
      * @since   1.0.0
      */
-    public function log($level, $message, array $context = array())
+    public function log($log_level, $message, array $context = array())
     {
-        parent::log($level, $message, $context);
+        parent::log($log_level, $message, $context);
     }
 }
