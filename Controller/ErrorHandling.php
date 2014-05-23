@@ -29,18 +29,23 @@ use Psr\Log\LoggerInterface;
  *
  * @link       http://us2.php.net/manual/en/function.set-error-handler.php
  *
- * 2. Inject a PSR-3 compliant Logger Interface (ex., Molajo Log or Monolog) as the logger_instance for this class
+ * 2. Inject Logger that implements Psr\Log\LoggerInterface (ex., Monolog or Molajo Log)
+ *  as the logger_instance for this class
  *
+ * @link       https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md#3-psrlogloggerinterface
+ * @link       https://github.com/Seldaek/monolog
  * @link       https://github.com/Molajo/Log
  *
- * 3. How is `log_level` assigned for the error before adding a log entry? See `setLogLevel` method for more.
+ * 3. Consider `log_level` assignment process for your needs.
  *
  *      a. Uses `log_level` within $options, if located.
- *      b. Uses the injected $error_number_array assignments injected during class construction
- *      c. Uses existing $error_number_array to map the PHP Error Number to a PSR-3 Log Level.
+ *      b. Uses the injected `$error_number_array` assignments injected during class construction
+ *      c. Uses existing `$error_number_array` to map the PHP Error Number to a PSR-3 Log Level.
+ *      d. See `setLogLevel` method for details.
  *
  * 4. To use within the application, set errors using the PHP `trigger_error` function. There is no need
- *    to inject a logging class in the application classes. This class will interact with the Log class.
+ *    to inject a logging class in the application classes. PHP will route errors here (see step 1)
+ *    and this class will interact with the Log class. This separation of duties is an improvement.
  *
  *    trigger_error('This is the message', E_USER_NOTICE);
  *
@@ -81,7 +86,7 @@ class ErrorHandling implements ErrorHandlingInterface
         );
 
     /**
-     * Levels
+     * Valid Log Levels in an array for validation
      *
      * @var    array
      * @since  1.0
@@ -116,7 +121,7 @@ class ErrorHandling implements ErrorHandlingInterface
     /**
      * Class Constructor
      *
-     * @param  LoggerInterface $logger_instance    PSR-3 compliant Logger
+     * @param  LoggerInterface $logger_instance (PSR-3 compliant Logger)
      * @param  array           $error_number_array Only to override default error code to log level assignments
      *
      * @since  1.0
@@ -142,7 +147,7 @@ class ErrorHandling implements ErrorHandlingInterface
      * @param   array   $context
      *
      * @return  boolean
-     * @throws  \CommonApi\Exception\ErrorThrownAsException
+     * @throws  ErrorException
      * @since   1.0.0
      */
     public function setError($error_number, $message, $file, $line_number, array $context = array())
@@ -152,7 +157,7 @@ class ErrorHandling implements ErrorHandlingInterface
             return true; // Neither this class, nor PHP will process
         }
 
-        $level = $this->setLogLevel($error_number, $context);
+        $level = (int) $this->setLogLevel($error_number, $context);
 
         /** 2. Errors mapped to a Log Level of 0 are to be processed by PHP */
         if ($level === 0) {
@@ -225,14 +230,16 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     protected function setLogLevel($error_number, array $context = array())
     {
-        $log_level = $this->setLogLevelMoreControl($context);
+        $results = $this->setLogLevelMoreControl($context);
 
-        if ($log_level === false) {
+        if ($results === false) {
         } else {
+            $log_level = (int) $results;
+
             return $log_level;
         }
 
-        return $this->setLogLevelUsingMapping($error_number);
+        return (int) $this->setLogLevelUsingMapping($error_number);
     }
 
     /**
@@ -298,25 +305,19 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     protected function validateLogLevel($log_level, $set_default = false)
     {
-        $validated_log_level = false;
-
         if (in_array($log_level, $this->levels)) {
-            $validated_log_level = $log_level;
-        }
-
-        if ($log_level === 0) { // pass on to PHP for processing
-            $validated_log_level = 0;
+            return $log_level;
         }
 
         if ($log_level > 600) { // throw PHP Exception
-            $validated_log_level = 999;
+            return 999;
         }
 
-        if ($validated_log_level === false && $set_default === true) {
-            $validated_log_level = 0;   // pass on to PHP for processing
+        if ($set_default === false) {
+            return $log_level;
         }
 
-        return $validated_log_level;
+        return 0;   //passes on to PHP
     }
 
     /**
