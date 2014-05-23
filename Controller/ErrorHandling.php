@@ -32,7 +32,7 @@ use Psr\Log\LoggerInterface;
  * 2. Inject Logger that implements Psr\Log\LoggerInterface (ex., Monolog or Molajo Log)
  *  as the logger_instance for this class
  *
- * @link       https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md#3-psrlogloggerinterface
+ * @link       https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
  * @link       https://github.com/Seldaek/monolog
  * @link       https://github.com/Molajo/Log
  *
@@ -47,7 +47,7 @@ use Psr\Log\LoggerInterface;
  *    to inject a logging class in the application classes. PHP will route errors here (see step 1)
  *    and this class will interact with the Log class. This separation of duties is an improvement.
  *
- *    trigger_error('This is the message', E_USER_NOTICE);
+ *    trigger_error('This is the message', E_USER_NOTICE);  // NOTE: Only use E_USER_etc values
  *
  * @link       http://php.net/manual/en/function.trigger-error.php
  *
@@ -91,7 +91,7 @@ class ErrorHandling implements ErrorHandlingInterface
      * @var    array
      * @since  1.0
      */
-    protected $levels = array(100, 200, 250, 300, 400, 500, 550, 600);
+    protected $levels = array(0, 100, 200, 250, 300, 400, 500, 550, 600, 999);
 
     /**
      * Error Code Array - use default assignments or inject custom $error_number_array
@@ -121,7 +121,7 @@ class ErrorHandling implements ErrorHandlingInterface
     /**
      * Log Level - used for assignment processes
      *
-     * @var    array
+     * @var    integer
      * @since  1.0
      */
     protected $log_level = null;
@@ -129,7 +129,7 @@ class ErrorHandling implements ErrorHandlingInterface
     /**
      * Class Constructor
      *
-     * @param  LoggerInterface $logger_instance (PSR-3 compliant Logger)
+     * @param  LoggerInterface $logger_instance    (PSR-3 compliant Logger)
      * @param  array           $error_number_array Only to override default error code to log level assignments
      *
      * @since  1.0
@@ -148,7 +148,7 @@ class ErrorHandling implements ErrorHandlingInterface
     /**
      * Method is called by PHP when assigned as the `set_error_handler` for the application
      *
-     * @param   integer $error_number
+     * @param   string  $error_number
      * @param   string  $message
      * @param   string  $file
      * @param   integer $line_number

@@ -9,6 +9,7 @@
 namespace Molajo\Controller;
 
 use CommonApi\Controller\ErrorHandlingInterface;
+use ErrorException;
 use Molajo\Log\Logger;
 use Psr\Log\LoggerInterface;
 use stdClass;
@@ -37,13 +38,13 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Controller\ErrorHandling::__construct
      * @covers Molajo\Controller\ErrorHandling::setError
      * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
      * @covers Molajo\Controller\ErrorHandling::setLogLevel
      * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
      * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
      * @covers Molajo\Controller\ErrorHandling::validateLogLevel
      * @covers Molajo\Controller\ErrorHandling::createLogContextArray
      * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
      */
     protected function setUp()
     {
@@ -66,22 +67,20 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
      * @covers Molajo\Controller\ErrorHandling::__construct
      * @covers Molajo\Controller\ErrorHandling::setError
      * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
      * @covers Molajo\Controller\ErrorHandling::setLogLevel
      * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
      * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
      * @covers Molajo\Controller\ErrorHandling::validateLogLevel
      * @covers Molajo\Controller\ErrorHandling::createLogContextArray
      * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
      */
-    public function testTriggerError()
+    public function testTriggerErrorSetLogLevel()
     {
         $log_level      = 200;
         $message        = 'Person logged on.';
-        $context        = array();
-        $context['dog'] = 'food';
 
-        trigger_error('Person logged on.', E_USER_NOTICE);
+        trigger_error('Person logged on.', E_USER_ERROR);
 
         $results = $this->logger->getLog('Test1');
 
@@ -93,6 +92,239 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($message, $row->message);
             $this->assertEquals('info', $row->level_name);
         }
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Controller\ErrorHandling::__construct
+     * @covers Molajo\Controller\ErrorHandling::setError
+     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     */
+    public function testRespectErrorReportingOff()
+    {
+        $log_level      = 200;
+        $message        = 'Person logged on.';
+
+        error_reporting(0);
+        trigger_error('Person logged on.', E_USER_NOTICE);
+
+        $results = $this->logger->getLog('Test1');
+
+        $this->assertEquals(null, $results);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Controller\ErrorHandling::__construct
+     * @covers Molajo\Controller\ErrorHandling::setError
+     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     */
+    public function testRespectErrorReportingOnMapToLogLevel()
+    {
+        $message        = 'Person logged on.';
+
+        error_reporting(E_ALL & ~E_NOTICE);
+        trigger_error('Person logged on.', E_USER_NOTICE);
+
+        $results = $this->logger->getLog('Test1');
+
+        $this->assertTrue(is_array($results));
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Controller\ErrorHandling::__construct
+     * @covers Molajo\Controller\ErrorHandling::setError
+     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     */
+    public function testMapWarningToWarning()
+    {
+        $message        = 'Bad person logged on.';
+
+        error_reporting(E_ALL & ~E_NOTICE);
+        trigger_error($message, E_USER_WARNING);
+
+        $results = $this->logger->getLog('Test1');
+
+        $this->assertTrue(is_array($results));
+
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals(300, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('warning', $row->level_name);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Controller\ErrorHandling::__construct
+     * @covers Molajo\Controller\ErrorHandling::setError
+     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     */
+    public function testLetPHPHandleLogPassIn0()
+    {
+        $log_level      = 0;
+        $message        = 'Person logged on.';
+
+        error_reporting(E_ALL & ~E_NOTICE);
+        trigger_error($message, E_USER_WARNING);
+
+        $results = $this->logger->getLog('Test1');
+
+        $this->assertEquals(null, $results);
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Controller\ErrorHandling::__construct
+     * @covers Molajo\Controller\ErrorHandling::setError
+     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     */
+    public function testLetPHPHandleOneTakeTheNext()
+    {
+        error_reporting(E_ALL & ~E_NOTICE);
+
+        $message        = 'Person logged on.';
+
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'Memory';
+        $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context     = array();
+        $loggers[]                   = $logger_request;
+
+        $logger = new MockLogger($loggers);
+
+        $error_number_array
+            = array(
+            E_NOTICE          => 200,
+            E_DEPRECATED      => 0,
+            E_STRICT          => 0,
+            E_WARNING         => 0,
+            E_ERROR           => 0,
+            E_USER_NOTICE     => 200,
+            E_USER_DEPRECATED => 0,
+            E_USER_WARNING    => 0,
+            E_USER_ERROR      => 0
+        );
+
+        $error_handler = new MockErrorHandling($logger, $error_number_array);
+
+        set_error_handler(array($error_handler, 'setError'));
+
+        /** Warnings are ignored */
+        trigger_error($message, E_USER_WARNING);
+        $results = $logger->getLog('Test1');
+        $this->assertEquals(null, $results);
+
+        /** Notices are logged */
+        trigger_error($message, E_USER_NOTICE);
+        $results = $logger->getLog('Test1');
+
+        $this->assertTrue(is_array($results));
+        foreach ($results as $row) {
+            $this->assertEquals(19, strlen($row->entry_date));
+            $this->assertEquals(1, count($results));
+            $this->assertEquals(200, $row->level);
+            $this->assertEquals($message, $row->message);
+            $this->assertEquals('info', $row->level_name);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @covers Molajo\Controller\ErrorHandling::__construct
+     * @covers Molajo\Controller\ErrorHandling::setError
+     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers Molajo\Controller\ErrorHandling::log
+     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     *
+     * @expectedException ErrorException
+     */
+    public function testThrowException()
+    {
+        error_reporting(E_ALL & ~E_NOTICE);
+
+        $message        = 'Person logged on.';
+
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'Memory';
+        $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context     = array();
+        $loggers[]                   = $logger_request;
+
+        $logger = new MockLogger($loggers);
+
+        $error_number_array
+            = array(
+            E_NOTICE          => 200,
+            E_DEPRECATED      => 0,
+            E_STRICT          => 0,
+            E_WARNING         => 0,
+            E_ERROR           => 0,
+            E_USER_NOTICE     => 200,
+            E_USER_DEPRECATED => 0,
+            E_USER_WARNING    => 0,
+            E_USER_ERROR      => 999
+        );
+
+        $error_handler = new MockErrorHandling($logger, $error_number_array);
+
+        set_error_handler(array($error_handler, 'setError'));
+
+        /** Exception */
+        trigger_error($message, E_USER_ERROR);
 
         return $this;
     }

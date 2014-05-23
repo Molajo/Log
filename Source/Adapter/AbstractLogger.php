@@ -49,7 +49,7 @@ abstract class AbstractLogger
     /**
      * Columns for Log
      *
-     * @var    string
+     * @var    array
      * @since  1.0
      */
     protected $columns = array(
