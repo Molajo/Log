@@ -47,12 +47,27 @@ abstract class AbstractLogger
     protected $maintain_log = true;
 
     /**
-     * Columns to render output
+     * Columns for Log
      *
-     * @var    array
+     * @var    string
      * @since  1.0
      */
-    protected $columns;
+    protected $columns = array(
+        'entry_date',
+        'level',
+        'level_name',
+        'message',
+        'formatted_time_from_start',
+        'formatted_memory'
+    );
+
+    /**
+     * Callback
+     *
+     * @var    callable
+     * @since  1.0
+     */
+    protected $callback;
 
     /**
      * Log Entry
@@ -421,11 +436,11 @@ abstract class AbstractLogger
     }
 
     /**
-     * Set File Location
+     * Set Columns
      *
      * @param   array $context
      *
-     * @return  array
+     * @return  $this
      * @since   1.0.0
      */
     protected function setColumns(array $context)

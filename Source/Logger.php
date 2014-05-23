@@ -26,7 +26,16 @@ class Logger implements LoggerInterface
      * @var    array
      * @since  1.0
      */
-    protected $logger_adapters = array('callback', 'database', 'dummy', 'echo', 'errorlog', 'file', 'memory');
+    protected $logger_adapters = array(
+        'callback',
+        'database',
+        'dummy',
+        'echo',
+        'email',
+        'errorlog',
+        'file',
+        'memory'
+    );
 
     /**
      * RFC 5424 syslog protocol Logging levels

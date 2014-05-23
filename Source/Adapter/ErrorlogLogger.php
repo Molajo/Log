@@ -19,21 +19,6 @@ namespace Molajo\Log\Adapter;
 class ErrorlogLogger extends AbstractLogger
 {
     /**
-     * Columns for Log
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $columns = array(
-        'entry_date',
-        'level',
-        'level_name',
-        'message',
-        'formatted_time_from_start',
-        'formatted_memory'
-    );
-
-    /**
      * Log the message for the level given the data in context
      *
      * @param   mixed  $level
@@ -42,17 +27,20 @@ class ErrorlogLogger extends AbstractLogger
      *
      * @return  $this
      * @since   1.0.0
+     * @link    http://www.php.net/manual/en/function.error-log.php
      */
     public function log($level, $message, array $context = array())
     {
         parent::log($level, $message, $context);
 
         $output = '';
+
         foreach ($this->columns as $column) {
             $output .= $this->log_entry->$column . "\t";
         }
         $output .= PHP_EOL;
 
+        $output = addslashes($output);
 
         if ($this->file_location === null) {
             error_log((string) $output);
