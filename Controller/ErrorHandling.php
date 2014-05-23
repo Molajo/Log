@@ -45,15 +45,16 @@ use Psr\Log\LoggerInterface;
  *
  *       Example 1 simple message and error code:
  *
- *       trigger_error('This is the message', E_USER_NOTICE);
+ *          trigger_error('This is the message', E_USER_NOTICE);
  *
  *       Example 2 use the $context array to assign the Log Level and provide data values to be used in log
+ *REDO THIS EXPLANATION - trigger_error can only send 2
+ *          $context = array();
+ *          $context['log_level'] = 200;
+ *          $context['userid']    = 1;
+ *          $context['action']    = 'logon';
  *
- *       $context = array();
- *       $context['log_level'] = 200;
- *       $context['userid']    = 1;
- *       $context['action']    = 'logon;
- *       trigger_error('This is another message', E_ERROR, $context=$value);
+ *          trigger_error('This is another message', E_ERROR, $context=$value);
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -110,7 +111,7 @@ class ErrorHandling implements ErrorHandlingInterface
             E_DEPRECATED      => 250,
             E_STRICT          => 300,
             E_WARNING         => 300,
-            E_ERROR           => 999,
+            E_ERROR           => 400,
             E_USER_NOTICE     => 200,
             E_USER_DEPRECATED => 250,
             E_USER_WARNING    => 300,
@@ -179,10 +180,10 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     protected function respectErrorReporting($error_number)
     {
-        if (!(error_reporting() & $error_number)) {
-            // This error code is not included in error_reporting
-            return false;
-        }
+//        if (!(error_reporting() & $error_number)) {
+  //          // This error code is not included in error_reporting
+    //        return false;
+      //  }
 
         return true;
     }
@@ -261,7 +262,7 @@ class ErrorHandling implements ErrorHandlingInterface
     {
         if (isset($this->error_number_array[$error_number])) {
         } else {
-            return $this->error_number_array[400];
+            return $this->error_number_array[E_ERROR];
         }
 
         return $this->error_number_array[$error_number];

@@ -1,19 +1,19 @@
 [
     {
-        "entry_date": "2014-05-23 05:50:55",
+        "entry_date": "2014-05-23 07:50:23",
         "level": 600,
         "level_name": "emergency",
         "message": "Hello",
-        "started_time": 1400817055.4295,
-        "previous_time": 1400817055.4295,
-        "current_time": 1400817055.4299,
-        "elapsed_time_from_start": 0.00048708915710449,
-        "formatted_time_from_start": "0.00 seconds (+-1400817055.43)",
-        "elapsed_time_from_previous": 0.00044798851013184,
-        "formatted_time_for_step": "0.00 seconds (+-1400817055.43)",
-        "memory_usage": 8,
+        "started_time": 1400824223.5548,
+        "previous_time": 1400824223.5548,
+        "current_time": 1400824223.5553,
+        "elapsed_time_from_start": 0.0004730224609375,
+        "formatted_time_from_start": "0.00 seconds (+-1400824223.55)",
+        "elapsed_time_from_previous": 0.00043010711669922,
+        "formatted_time_for_step": "0.00 seconds (+-1400824223.55)",
+        "memory_usage": 7.75,
         "previous_memory": 0,
-        "memory_difference": 8,
-        "formatted_memory": "8.00 MB (+8.000)"
+        "memory_difference": 7.75,
+        "formatted_memory": "7.75 MB (+7.750)"
     }
 ]
