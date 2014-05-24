@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1400894120">
-  <project timestamp="1400894120">
+<coverage generated="1400894519">
+  <project timestamp="1400894519">
     <file name="/Users/amystephen/Sites/Molajo/Log/.dev/Bootstrap.php">
       <line num="31" type="stmt" count="0"/>
       <line num="32" type="stmt" count="0"/>
@@ -46,62 +46,62 @@
         <line num="146" type="stmt" count="2"/>
         <line num="147" type="stmt" count="7"/>
         <line num="162" type="method" name="setError" crap="4.01" count="7"/>
-        <line num="165" type="stmt" count="7"/>
-        <line num="166" type="stmt" count="1"/>
+        <line num="164" type="stmt" count="7"/>
+        <line num="165" type="stmt" count="1"/>
+        <line num="168" type="stmt" count="6"/>
         <line num="170" type="stmt" count="6"/>
-        <line num="172" type="stmt" count="6"/>
-        <line num="173" type="stmt" count="2"/>
-        <line num="177" type="stmt" count="5"/>
-        <line num="178" type="stmt" count="1"/>
-        <line num="179" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="2"/>
+        <line num="174" type="stmt" count="5"/>
+        <line num="175" type="stmt" count="1"/>
+        <line num="176" type="stmt" count="0"/>
+        <line num="178" type="stmt" count="4"/>
+        <line num="180" type="stmt" count="4"/>
         <line num="182" type="stmt" count="4"/>
-        <line num="184" type="stmt" count="4"/>
-        <line num="186" type="stmt" count="4"/>
-        <line num="198" type="method" name="respectErrorReporting" crap="2" count="7"/>
-        <line num="200" type="stmt" count="7"/>
-        <line num="201" type="stmt" count="6"/>
-        <line num="205" type="stmt" count="1"/>
-        <line num="222" type="method" name="setLogLevel" crap="2" count="6"/>
-        <line num="224" type="stmt" count="6"/>
+        <line num="194" type="method" name="respectErrorReporting" crap="2" count="7"/>
+        <line num="196" type="stmt" count="7"/>
+        <line num="197" type="stmt" count="6"/>
+        <line num="201" type="stmt" count="1"/>
+        <line num="218" type="method" name="setLogLevel" crap="2" count="6"/>
+        <line num="220" type="stmt" count="6"/>
+        <line num="222" type="stmt" count="6"/>
+        <line num="223" type="stmt" count="4"/>
+        <line num="224" type="stmt" count="4"/>
         <line num="226" type="stmt" count="6"/>
-        <line num="227" type="stmt" count="4"/>
-        <line num="228" type="stmt" count="4"/>
-        <line num="230" type="stmt" count="6"/>
-        <line num="255" type="method" name="setLogLevelMoreControl" crap="2" count="6"/>
-        <line num="257" type="stmt" count="6"/>
-        <line num="258" type="stmt" count="2"/>
-        <line num="261" type="stmt" count="4"/>
-        <line num="272" type="method" name="setLogLevelUsingMapping" crap="2" count="4"/>
+        <line num="251" type="method" name="setLogLevelMoreControl" crap="2" count="6"/>
+        <line num="253" type="stmt" count="6"/>
+        <line num="254" type="stmt" count="2"/>
+        <line num="257" type="stmt" count="4"/>
+        <line num="268" type="method" name="setLogLevelUsingMapping" crap="2" count="4"/>
+        <line num="270" type="stmt" count="4"/>
+        <line num="272" type="stmt" count="4"/>
+        <line num="273" type="stmt" count="4"/>
         <line num="274" type="stmt" count="4"/>
         <line num="276" type="stmt" count="4"/>
-        <line num="277" type="stmt" count="4"/>
-        <line num="278" type="stmt" count="4"/>
-        <line num="280" type="stmt" count="4"/>
-        <line num="296" type="method" name="validateLogLevel" crap="4.68" count="6"/>
-        <line num="298" type="stmt" count="6"/>
-        <line num="299" type="stmt" count="6"/>
-        <line num="300" type="stmt" count="6"/>
+        <line num="292" type="method" name="validateLogLevel" crap="4.68" count="6"/>
+        <line num="294" type="stmt" count="6"/>
+        <line num="295" type="stmt" count="6"/>
+        <line num="296" type="stmt" count="6"/>
+        <line num="299" type="stmt" count="0"/>
+        <line num="300" type="stmt" count="0"/>
         <line num="303" type="stmt" count="0"/>
-        <line num="304" type="stmt" count="0"/>
-        <line num="307" type="stmt" count="0"/>
-        <line num="309" type="stmt" count="0"/>
-        <line num="337" type="method" name="createLogContextArray" crap="4" count="4"/>
-        <line num="339" type="stmt" count="4"/>
+        <line num="305" type="stmt" count="0"/>
+        <line num="333" type="method" name="createLogContextArray" crap="4" count="4"/>
+        <line num="335" type="stmt" count="4"/>
+        <line num="337" type="stmt" count="4"/>
+        <line num="338" type="stmt" count="4"/>
+        <line num="340" type="stmt" count="4"/>
         <line num="341" type="stmt" count="4"/>
         <line num="342" type="stmt" count="4"/>
-        <line num="344" type="stmt" count="4"/>
+        <line num="343" type="stmt" count="4"/>
         <line num="345" type="stmt" count="4"/>
         <line num="346" type="stmt" count="4"/>
-        <line num="347" type="stmt" count="4"/>
-        <line num="349" type="stmt" count="4"/>
-        <line num="350" type="stmt" count="4"/>
-        <line num="352" type="stmt" count="4"/>
-        <line num="365" type="method" name="log" crap="1" count="4"/>
-        <line num="367" type="stmt" count="4"/>
-        <line num="369" type="stmt" count="4"/>
-        <line num="384" type="method" name="throwErrorException" crap="1" count="1"/>
-        <line num="386" type="stmt" count="1"/>
-        <metrics loc="388" ncloc="149" classes="1" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="47" elements="62" coveredelements="55"/>
+        <line num="348" type="stmt" count="4"/>
+        <line num="361" type="method" name="log" crap="1" count="4"/>
+        <line num="363" type="stmt" count="4"/>
+        <line num="365" type="stmt" count="4"/>
+        <line num="380" type="method" name="throwErrorException" crap="1" count="1"/>
+        <line num="382" type="stmt" count="1"/>
+        <metrics loc="384" ncloc="149" classes="1" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="47" elements="62" coveredelements="55"/>
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Log/Controller/ExceptionHandling.php">
         <class name="ExceptionHandling" namespace="Molajo\Controller">
@@ -684,6 +684,6 @@
       <line num="53" type="stmt" count="0"/>
       <metrics loc="53" ncloc="51" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="0" elements="29" coveredelements="0"/>
     </file>
-    <metrics files="14" loc="2336" ncloc="1231" classes="12" methods="79" coveredmethods="48" conditionals="0" coveredconditionals="0" statements="508" coveredstatements="275" elements="587" coveredelements="323"/>
+    <metrics files="14" loc="2332" ncloc="1231" classes="12" methods="79" coveredmethods="48" conditionals="0" coveredconditionals="0" statements="508" coveredstatements="275" elements="587" coveredelements="323"/>
   </project>
 </coverage>
