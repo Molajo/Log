@@ -161,24 +161,20 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     public function setError($error_number, $message, $file, $line_number, array $context = array())
     {
-        /** 1. Does not fit criteria defined by error_reporting() PHP.ini settings */
         if ($this->respectErrorReporting($error_number) === false) {
             return true; // Neither this class, nor PHP will process
         }
 
-        /** 2. Errors mapped to a Log Level of 0 are to be processed by PHP */
         $this->setLogLevel($error_number, $context);
 
         if ($this->log_level === 0) {
             return false; // Tell PHP to handle this error
         }
 
-        /** 3. Errors mapped to a Log Level higher than 600 are to be thrown as PHP Exceptions */
         if ($this->log_level > 600) {
             $this->throwErrorException($error_number, $message, $file, $line_number);
         }
 
-        /** 4. Remaining Errors are logged using a PSR-3 compliant logger */
         $context = $this->createLogContextArray($file, $line_number, $context);
 
         $this->log($this->log_level, $message, $context);

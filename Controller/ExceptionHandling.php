@@ -115,9 +115,6 @@ class ExceptionHandling
      */
     public function handleException(Exception $e)
     {
-        echo 'in handleException'  ;
-        var_dump($e);
-        die;
         $this->setLogLevelUsingMapping($e->getCode());
 
         if ($this->log_level === 0) {

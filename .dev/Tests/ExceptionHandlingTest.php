@@ -8,9 +8,7 @@
  */
 namespace Molajo\Controller;
 
-use CommonApi\Exception\ExceptionInterface;
 use Exception;
-use Molajo\Controller\ExceptionHandling;
 use Molajo\Log\Logger;
 use Psr\Log\LoggerInterface;
 use stdClass;
@@ -37,6 +35,11 @@ class ExceptionHandlingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Controller\ExceptionHandling::__construct
+     * @covers Molajo\Controller\ExceptionHandling::handleException
+     * @covers Molajo\Controller\ExceptionHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ExceptionHandling::createLogContextArray
+     * @covers Molajo\Controller\ExceptionHandling::log
+     * @covers Molajo\Controller\ExceptionHandling::displayException
      */
     protected function setUp()
     {
@@ -55,6 +58,12 @@ class ExceptionHandlingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Molajo\Controller\ExceptionHandling::__construct
+     * @covers Molajo\Controller\ExceptionHandling::handleException
+     * @covers Molajo\Controller\ExceptionHandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\ExceptionHandling::createLogContextArray
+     * @covers Molajo\Controller\ExceptionHandling::log
+     * @covers Molajo\Controller\ExceptionHandling::displayException
+     *
      * @expectedException Exception
      */
     public function testTriggerExceptionSetLogLevel()
