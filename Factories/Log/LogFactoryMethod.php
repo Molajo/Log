@@ -10,7 +10,7 @@ namespace Molajo\Factories\Log;
 
 use CommonApi\IoC\FactoryInterface;
 use CommonApi\IoC\FactoryBatchInterface;
-use CommonApi\Exception\RuntimeException;
+use Molajo\Exception\RuntimeException;
 use Exception;
 use Molajo\IoC\FactoryMethodBase;
 
@@ -35,7 +35,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
     {
         $options['product_name']             = basename(__DIR__);
         $options['store_instance_indicator'] = true;
-        $options['product_namespace']        = 'Molajo\\Log\\Request';
+        $options['product_namespace']        = 'Molajo\\Log\\Logger';
 
         parent::__construct($options);
     }
@@ -45,44 +45,31 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      *
      * @return  $this
      * @since   1.0.0
-     * @throws  \CommonApi\Exception\RuntimeException
+     * @throws  \Molajo\Exception\RuntimeException
      */
     public function instantiateClass()
     {
-        $adapter = $this->getAdapter($type = 'Memory');
+        $loggers = array();
+
+        $logger_request                           = new stdClass();
+        $logger_request->name                     = 'Full Logging to File';
+        $logger_request->logger_type              = 'File';
+        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context                  = array();
+        $logger_request->context['file_location'] = __DIR__ . '/FileLog.json';
+        $loggers[]                                = $logger_request;
 
         $class = $this->product_namespace;
 
         try {
-            $this->product_result = new $class($adapter);
+            $this->product_result = new $class($loggers);
 
         } catch (Exception $e) {
             throw new RuntimeException(
-                'Log: Could not instantiate Adapter: ' . $class
+                'LogFactoryMethod: Could not instantiate Class: ' . $class
             );
         }
 
         return $this;
-    }
-
-    /**
-     * Instantiate Log Adapter
-     *
-     * @return  $this
-     * @since   1.0.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    public function getAdapter($type)
-    {
-        $class = 'Molajo\\Log\\Logger\\' . ucfirst(strtolower($type));
-
-        try {
-            return new $class();
-
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Log: Could not instantiate Log Adapter: ' . $class
-            );
-        }
     }
 }

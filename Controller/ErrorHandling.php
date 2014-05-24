@@ -23,13 +23,13 @@ use Psr\Log\LoggerInterface;
  *
  * How to use:
  *
- * 1. Set the `setError` method of this class as the PHP error_handler for the application.
+ * 1. Set the `setError` method of this class as the PHP `error_handler` for the application.
  *
  *    set_error_handler(array($this->error_handler, 'setError'));
  *
  * @link       http://us2.php.net/manual/en/function.set-error-handler.php
  *
- * 2. Inject Logger that implements Psr\Log\LoggerInterface (ex., Monolog or Molajo Log)
+ * 2. Inject `Logger` that implements Psr\Log\LoggerInterface (ex., `Monolog` or `Molajo Log`)
  *  as the logger_instance for this class
  *
  * @link       https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
@@ -39,13 +39,14 @@ use Psr\Log\LoggerInterface;
  * 3. Consider `log_level` assignment process for your needs.
  *
  *      a. Uses `log_level` within $options, if located.
- *      b. Uses the injected `$error_number_array` assignments injected during class construction
+ *      b. Uses the injected `$error_number_array` assignments injected during class construction.
  *      c. Uses existing `$error_number_array` to map the PHP Error Number to a PSR-3 Log Level.
  *      d. See `setLogLevel` method for details.
  *
  * 4. To use within the application, set errors using the PHP `trigger_error` function. There is no need
  *    to inject a logging class in the application classes. PHP will route errors here (see step 1)
- *    and this class will interact with the Log class. This separation of duties is an improvement.
+ *    and this class will interact with the Log class. This separation of duties and reduction of
+ *    dependencies are a big improvement to this approach.
  *
  *    trigger_error('This is the message', E_USER_NOTICE);  // NOTE: Only use E_USER_etc values
  *
@@ -165,15 +166,12 @@ class ErrorHandling implements ErrorHandlingInterface
             return true; // Neither this class, nor PHP will process
         }
 
+        /** 2. Errors mapped to a Log Level of 0 are to be processed by PHP */
         $this->setLogLevel($error_number, $context);
 
-        /** 2. Errors mapped to a Log Level of 0 are to be processed by PHP */
         if ($this->log_level === 0) {
             return false; // Tell PHP to handle this error
         }
-
-        $message = (string)$message;
-        $context = $this->createLogContextArray($file, $line_number, $context);
 
         /** 3. Errors mapped to a Log Level higher than 600 are to be thrown as PHP Exceptions */
         if ($this->log_level > 600) {
@@ -181,6 +179,8 @@ class ErrorHandling implements ErrorHandlingInterface
         }
 
         /** 4. Remaining Errors are logged using a PSR-3 compliant logger */
+        $context = $this->createLogContextArray($file, $line_number, $context);
+
         $this->log($this->log_level, $message, $context);
 
         return true; // Tell PHP not to handle this error
@@ -297,11 +297,6 @@ class ErrorHandling implements ErrorHandlingInterface
     {
         if (in_array($log_level, $this->levels)) {
             $this->log_level = $log_level;
-            return true;
-        }
-
-        if ($log_level > 600) { // throw PHP Exception
-            $this->log_level = 999;
             return true;
         }
 

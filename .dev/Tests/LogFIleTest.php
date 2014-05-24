@@ -770,13 +770,13 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoContextFileLocation()
     {
-        $loggers                                  = array();
-        $logger_request                           = new stdClass();
-        $logger_request->name                     = 'Test1';
-        $logger_request->logger_type              = 'File';
-        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                  = array();
-        $loggers[]                                = $logger_request;
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'File';
+        $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context     = array();
+        $loggers[]                   = $logger_request;
 
         $class        = 'Molajo\\Log\\Logger';
         $this->logger = new $class($loggers);
@@ -787,7 +787,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $this->logger->log($level, $message, $context);
 
-        $base     = substr(__DIR__, 0, strlen(__DIR__) - 11);
+        $base = substr(__DIR__, 0, strlen(__DIR__) - 11);
 
         $results = json_decode(file_get_contents($base . '/Source/Adapter/FileLogger.json'));
 

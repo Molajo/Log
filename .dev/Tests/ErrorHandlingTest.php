@@ -342,7 +342,7 @@ class MockErrorHandling extends ErrorHandling implements ErrorHandlingInterface
      * @param   array   $context
      *
      * @return  $this
-     * @throws  \CommonApi\Exception\ErrorThrownAsException
+     * @throws  \Molajo\Exception\ErrorThrownAsException
      * @since   1.0.0
      */
     public function setError($error_number, $message, $file, $line_number, array $context = array())

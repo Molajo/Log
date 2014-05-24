@@ -1,0 +1,19 @@
+[
+    {
+        "entry_date": "2014-05-24 03:09:04",
+        "level": 200,
+        "level_name": "info",
+        "message": "Hello",
+        "started_time": 1400893744.9138,
+        "previous_time": 1400893744.9138,
+        "current_time": 1400893744.9143,
+        "elapsed_time_from_start": 0.00050520896911621,
+        "formatted_time_from_start": "0.00 seconds (+-1400893744.91)",
+        "elapsed_time_from_previous": 0.00045919418334961,
+        "formatted_time_for_step": "0.00 seconds (+-1400893744.91)",
+        "memory_usage": 8.75,
+        "previous_memory": 0,
+        "memory_difference": 8.75,
+        "formatted_memory": "8.75 MB (+8.750)"
+    }
+]
