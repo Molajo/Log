@@ -1,28 +1,29 @@
 <?php
 /**
- * Log Factory Method
+ * Logger Factory Method
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Factories\Log;
+namespace Molajo\Factories\Logger;
 
 use CommonApi\IoC\FactoryInterface;
 use CommonApi\IoC\FactoryBatchInterface;
-use Molajo\Exception\RuntimeException;
+use CommonApi\Exception\RuntimeException;
 use Exception;
 use Molajo\IoC\FactoryMethodBase;
+use stdClass;
 
 /**
- * Log Factory Method
+ * Logger Factory Method
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, FactoryBatchInterface
+class LoggerFactoryMethod extends FactoryMethodBase implements FactoryInterface, FactoryBatchInterface
 {
     /**
      * Constructor
@@ -45,7 +46,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
      *
      * @return  $this
      * @since   1.0.0
-     * @throws  \Molajo\Exception\RuntimeException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function instantiateClass()
     {
@@ -66,7 +67,7 @@ class LogFactoryMethod extends FactoryMethodBase implements FactoryInterface, Fa
 
         } catch (Exception $e) {
             throw new RuntimeException(
-                'LogFactoryMethod: Could not instantiate Class: ' . $class
+                'LoggerFactoryMethod: Could not instantiate Class: ' . $class
             );
         }
 

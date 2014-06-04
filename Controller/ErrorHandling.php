@@ -136,11 +136,9 @@ class ErrorHandling implements ErrorHandlingInterface
      * @since  1.0
      */
     public function __construct(
-        LoggerInterface $logger_instance,
+        LoggerInterface $logger,
         array $error_number_array = array()
     ) {
-        $this->logger_instance = $logger_instance;
-
         if (count($error_number_array) > 0) {
             $this->error_number_array = $error_number_array;
         }
@@ -161,6 +159,13 @@ class ErrorHandling implements ErrorHandlingInterface
      */
     public function setError($error_number, $message, $file, $line_number, array $context = array())
     {
+        echo 'xxxxIn ErrorHandling Class: setErrorxxxx<br>';
+        echo '<pre>';
+        var_dump(
+            array(
+                $error_number, $message, $file, $line_number, $context
+            )
+        );
         if ($this->respectErrorReporting($error_number) === false) {
             return true; // Neither this class, nor PHP will process
         }

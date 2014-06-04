@@ -37,4 +37,20 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
 
         parent::__construct($options);
     }
+
+    /**
+     * Follows the completion of the instantiate method
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    public function onAfterInstantiation()
+    {
+       // echo 'in onAfterInstantiation<pre>';
+      //  var_dump($this->product_result);
+
+
+        return $this;
+    }
+
 }
