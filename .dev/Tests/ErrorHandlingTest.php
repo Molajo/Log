@@ -35,16 +35,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     protected $error_handler;
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     protected function setUp()
     {
@@ -64,16 +66,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     public function testTriggerErrorSetLogLevel()
     {
@@ -97,16 +101,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     public function testRespectErrorReportingOff()
     {
@@ -124,16 +130,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     public function testRespectErrorReportingOnMapToLogLevel()
     {
@@ -150,16 +158,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     public function testMapWarningToWarning()
     {
@@ -184,16 +194,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     public function testLetPHPHandleLogPassIn0()
     {
@@ -211,16 +223,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      */
     public function testLetPHPHandleOneTakeTheNext()
     {
@@ -277,16 +291,18 @@ class ErrorHandlingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Molajo\Controller\ErrorHandling::__construct
-     * @covers Molajo\Controller\ErrorHandling::setError
-     * @covers Molajo\Controller\ErrorHandling::respectErrorReporting
-     * @covers Molajo\Controller\ErrorHandling::setLogLevel
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelMoreControl
-     * @covers Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ErrorHandling::validateLogLevel
-     * @covers Molajo\Controller\ErrorHandling::createLogContextArray
-     * @covers Molajo\Controller\ErrorHandling::log
-     * @covers Molajo\Controller\ErrorHandling::throwErrorException
+     * @covers  Molajo\Controller\ErrorHandling::__construct
+     * @covers  Molajo\Controller\ErrorHandling::setError
+     * @covers  Molajo\Controller\ErrorHandling::setErrorPHPHandles
+     * @covers  Molajo\Controller\ErrorHandling::setErrorLogEntry
+     * @covers  Molajo\Controller\ErrorHandling::respectErrorReporting
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelMoreControl
+     * @covers  Molajo\Controller\ErrorHandling::setLogLevelUsingMapping
+     * @covers  Molajo\Controller\ErrorHandling::validateLogLevel
+     * @covers  Molajo\Controller\ErrorHandling::createLogContextArray
+     * @covers  Molajo\Controller\ErrorHandling::log
+     * @covers  Molajo\Controller\ErrorHandling::throwErrorException
      *
      * @expectedException ErrorException
      */
