@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1400894519">
-  <project timestamp="1400894519">
+<coverage generated="1402051929">
+  <project timestamp="1402051929">
     <file name="/Users/amystephen/Sites/Molajo/Log/.dev/Bootstrap.php">
       <line num="31" type="stmt" count="0"/>
       <line num="32" type="stmt" count="0"/>
@@ -105,44 +105,47 @@
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Log/Controller/ExceptionHandling.php">
         <class name="ExceptionHandling" namespace="Molajo\Controller">
-          <metrics methods="6" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="2" elements="34" coveredelements="3"/>
+          <metrics methods="6" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="3" elements="37" coveredelements="4"/>
         </class>
-        <line num="101" type="method" name="__construct" crap="1" count="1"/>
+        <line num="101" type="method" name="__construct" crap="2.26" count="1"/>
         <line num="105" type="stmt" count="1"/>
         <line num="106" type="stmt" count="1"/>
-        <line num="116" type="method" name="handleException" crap="6" count="0"/>
-        <line num="118" type="stmt" count="0"/>
-        <line num="120" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="1"/>
+        <line num="119" type="method" name="handleException" crap="6" count="0"/>
         <line num="121" type="stmt" count="0"/>
-        <line num="122" type="stmt" count="0"/>
         <line num="123" type="stmt" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
         <line num="126" type="stmt" count="0"/>
-        <line num="137" type="method" name="setLogLevelUsingMapping" crap="12" count="0"/>
-        <line num="139" type="stmt" count="0"/>
-        <line num="141" type="stmt" count="0"/>
-        <line num="143" type="stmt" count="0"/>
-        <line num="145" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="140" type="method" name="setLogLevelUsingMapping" crap="12" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="144" type="stmt" count="0"/>
         <line num="146" type="stmt" count="0"/>
-        <line num="147" type="stmt" count="0"/>
         <line num="148" type="stmt" count="0"/>
+        <line num="149" type="stmt" count="0"/>
         <line num="150" type="stmt" count="0"/>
-        <line num="161" type="method" name="createLogContextArray" crap="2" count="0"/>
-        <line num="163" type="stmt" count="0"/>
-        <line num="165" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="164" type="method" name="createLogContextArray" crap="2" count="0"/>
         <line num="166" type="stmt" count="0"/>
-        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
         <line num="169" type="stmt" count="0"/>
-        <line num="182" type="method" name="log" crap="2" count="0"/>
-        <line num="184" type="stmt" count="0"/>
-        <line num="186" type="stmt" count="0"/>
-        <line num="197" type="method" name="displayException" crap="2" count="0"/>
-        <line num="199" type="stmt" count="0"/>
-        <line num="200" type="stmt" count="0"/>
-        <line num="201" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="185" type="method" name="log" crap="2" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="189" type="stmt" count="0"/>
+        <line num="200" type="method" name="displayException" crap="2" count="0"/>
         <line num="202" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
         <line num="204" type="stmt" count="0"/>
-        <line num="206" type="stmt" count="0"/>
-        <metrics loc="205" ncloc="108" classes="1" methods="6" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="2" elements="34" coveredelements="3"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="209" type="stmt" count="0"/>
+        <metrics loc="208" ncloc="111" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="3" elements="37" coveredelements="3"/>
       </file>
     </package>
     <package name="Molajo\Log\Adapter">
@@ -650,7 +653,7 @@
       </file>
     </package>
     <file name="/Users/amystephen/Sites/Molajo/Log/vendor/composer/autoload_real.php">
-      <class name="ComposerAutoloaderInit727c6c8da3175ad35e7db889aa9bac97" namespace="global">
+      <class name="ComposerAutoloaderInit9bed1ea1a3ef39f70bb3e8ab1a34a91c" namespace="global">
         <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
       </class>
       <line num="9" type="method" name="loadClassLoader" crap="6" count="0"/>
@@ -684,6 +687,6 @@
       <line num="53" type="stmt" count="0"/>
       <metrics loc="53" ncloc="51" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="0" elements="29" coveredelements="0"/>
     </file>
-    <metrics files="14" loc="2332" ncloc="1231" classes="12" methods="79" coveredmethods="48" conditionals="0" coveredconditionals="0" statements="508" coveredstatements="275" elements="587" coveredelements="323"/>
+    <metrics files="14" loc="2335" ncloc="1234" classes="12" methods="79" coveredmethods="47" conditionals="0" coveredconditionals="0" statements="511" coveredstatements="276" elements="590" coveredelements="323"/>
   </project>
 </coverage>

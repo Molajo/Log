@@ -103,6 +103,9 @@ class ExceptionHandling
         array $exception_number_array = array()
     ) {
         $this->logger_instance = $logger_instance;
+        if (count($exception_number_array) > 0) {
+            $this->exception_to_log_level = $exception_number_array;
+        }
     }
 
     /**
