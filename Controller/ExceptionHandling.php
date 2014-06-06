@@ -8,7 +8,6 @@
  */
 namespace Molajo\Controller;
 
-use CommonApi\Exception\ExceptionInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
 
@@ -111,9 +110,8 @@ class ExceptionHandling
     /**
      * Method is called by PHP when assigned as the `set_exception_handler` for the application
      *
-     * @param   Exception $exception
      *
-     * @return  boolean
+     * @return  boolean|null
      * @since   1.0.0
      */
     public function handleException(Exception $e)
@@ -192,9 +190,8 @@ class ExceptionHandling
     /**
      * Method is called by PHP when assigned as the `set_exception_handler` for the application
      *
-     * @param   Exception $exception
      *
-     * @return  boolean
+     * @return  boolean|null
      * @since   1.0.0
      */
     public function displayException(Exception $e)

@@ -322,6 +322,7 @@ class Logger implements LoggerInterface
      * @param   array   $levels
      *
      * @return  array
+     * @since   1.0.0
      */
     protected function setLoggerLevels($name, array $levels)
     {
@@ -329,12 +330,7 @@ class Logger implements LoggerInterface
         $new_loggers = array();
 
         foreach ($this->levels_by_loggers as $key => $list) {
-            if (in_array($key, $levels)) {
-                $list[] = $name;
-                array_unique($list);
-                $found = true;
-            }
-            $new_loggers[$key] = $list;
+            list($found, $new_loggers) = $this->setLoggerLevel($name, $levels, $key, $list, $new_loggers, $found);
         }
 
         if ($found === true) {
@@ -342,6 +338,32 @@ class Logger implements LoggerInterface
         }
 
         return array();
+    }
+
+    /**
+     * Set Logger Level
+     *
+     * @param   string  $name
+     * @param   array   $levels
+     * @param   string  $key
+     * @param   array   $list
+     * @param   array   $new_loggers
+     * @param   boolean $found
+     *
+     * @return  array
+     * @since   1.0.0
+     */
+    protected function setLoggerLevel($name, array $levels, $key, $list, $new_loggers, $found)
+    {
+        if (in_array($key, $levels)) {
+            $list[] = $name;
+            array_unique($list);
+            $found = true;
+        }
+
+        $new_loggers[$key] = $list;
+
+        return array($found, $new_loggers);
     }
 
     /**

@@ -167,6 +167,26 @@ class ErrorHandling implements ErrorHandlingInterface
 
         $this->setLogLevel($error_number, $context);
 
+        if ($this->setErrorPHPHandles($error_number, $message, $file, $line_number) === false) {
+            return false;
+        }
+
+        return $this->setErrorLogEntry($message, $file, $line_number, $context);
+    }
+
+    /**
+     * PHP will handle Error or Exception
+     *
+     * @param   string  $error_number
+     * @param   string  $message
+     * @param   string  $file
+     * @param   integer $line_number
+     *
+     * @return  boolean
+     * @throws  \ErrorException
+     */
+    protected function setErrorPHPHandles($error_number, $message, $file, $line_number)
+    {
         if ($this->log_level === 0) {
             return false; // Tell PHP to handle this error
         }
@@ -175,6 +195,22 @@ class ErrorHandling implements ErrorHandlingInterface
             $this->throwErrorException($error_number, $message, $file, $line_number);
         }
 
+        return true;
+    }
+
+    /**
+     * Log this PHP Error
+     *
+     * @param   string  $message
+     * @param   string  $file
+     * @param   integer $line_number
+     * @param   array   $context
+     *
+     * @return  boolean
+     * @since   1.0.0
+     */
+    protected function setErrorLogEntry($message, $file, $line_number, array $context)
+    {
         $context = $this->createLogContextArray($file, $line_number, $context);
 
         $this->log($this->log_level, $message, $context);
