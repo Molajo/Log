@@ -10,6 +10,8 @@ namespace Molajo\Factories\Errorhandling;
 
 use CommonApi\IoC\FactoryInterface;
 use CommonApi\IoC\FactoryBatchInterface;
+use CommonApi\Exception\RuntimeException;
+use Exception;
 use Molajo\IoC\FactoryMethod\Base as FactoryMethodBase;
 
 /**
@@ -47,7 +49,7 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
      */
     public function setDependencies(array $reflection = null)
     {
-//        parent::setDependencies($reflection);
+        parent::setDependencies($reflection);
 
         $this->dependencies['Logger']        = array();
 
@@ -55,18 +57,23 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
     }
 
     /**
-     * Follows the completion of the instantiate method
+     * Instantiate Class
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
+     * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function onAfterInstantiation()
+    public function instantiateClass()
     {
-        echo 'in onAfterInstantiation<pre>';
-        var_dump($this->product_result);
-die;
+        $class = $this->product_namespace;
 
-        return $this;
+        try {
+            $this->product_result = new $class($this->dependencies['Logger']);
+
+        } catch (Exception $e) {
+            throw new RuntimeException(
+                'ErrorhandlingFactoryMethod: Could not instantiate Class: ' . $class
+            );
+        }
     }
-
 }
