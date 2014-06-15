@@ -10,7 +10,7 @@ namespace Molajo\Factories\Errorhandling;
 
 use CommonApi\IoC\FactoryInterface;
 use CommonApi\IoC\FactoryBatchInterface;
-use Molajo\IoC\FactoryMethodBase;
+use Molajo\IoC\FactoryMethod\Base as FactoryMethodBase;
 
 /**
  * Error Handling Factory Method
@@ -31,11 +31,27 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
      */
     public function __construct(array $options = array())
     {
-        $options['product_namespace']        = 'Molajo\\Controller\\ErrorHandling';
+        $options['product_namespace']        = 'Molajo\\Controller\\Errorhandling';
         $options['store_instance_indicator'] = true;
         $options['product_name']             = basename(__DIR__);
 
         parent::__construct($options);
+    }
+
+    /**
+     * Instantiate a new handler and inject it into the Adapter for the FactoryInterface
+     *
+     * @return  array
+     * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    public function setDependencies(array $reflection = null)
+    {
+//        parent::setDependencies($reflection);
+
+        $this->dependencies['Logger']        = array();
+
+        return $this->dependencies;
     }
 
     /**
@@ -46,9 +62,9 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
      */
     public function onAfterInstantiation()
     {
-       // echo 'in onAfterInstantiation<pre>';
-      //  var_dump($this->product_result);
-
+        echo 'in onAfterInstantiation<pre>';
+        var_dump($this->product_result);
+die;
 
         return $this;
     }

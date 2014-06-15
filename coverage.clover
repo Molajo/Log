@@ -35,8 +35,8 @@
       <metrics loc="46" ncloc="39" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="23" coveredelements="0"/>
     </file>
     <package name="Molajo\Controller">
-      <file name="/Users/amystephen/Sites/Molajo/Log/Controller/ErrorHandling.php">
-        <class name="ErrorHandling" namespace="Molajo\Controller">
+      <file name="/Users/amystephen/Sites/Molajo/Log/Controller/Errorhandling.php">
+        <class name="Errorhandling" namespace="Molajo\Controller">
           <metrics methods="12" coveredmethods="12" conditionals="0" coveredconditionals="0" statements="56" coveredstatements="51" elements="68" coveredelements="63"/>
         </class>
         <line num="138" type="method" name="__construct" crap="2" count="7"/>

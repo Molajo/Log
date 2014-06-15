@@ -12,7 +12,7 @@ use CommonApi\IoC\FactoryInterface;
 use CommonApi\IoC\FactoryBatchInterface;
 use CommonApi\Exception\RuntimeException;
 use Exception;
-use Molajo\IoC\FactoryMethodBase;
+use Molajo\IoC\FactoryMethod\Base as FactoryMethodBase;
 use stdClass;
 
 /**
