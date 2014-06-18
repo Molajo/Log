@@ -47,9 +47,9 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function setDependencies(array $reflection = null)
+    public function setDependencies(array $reflection = array())
     {
-        parent::setDependencies($reflection);
+        parent::setDependencies(array());
 
         $this->dependencies['Logger']        = array();
 
