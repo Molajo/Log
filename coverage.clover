@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1403768664">
-  <project timestamp="1403768664">
+<coverage generated="1403768992">
+  <project timestamp="1403768992">
     <file name="/Users/amystephen/Sites/Molajo/Molajo/vendor/molajo/log/.dev/Bootstrap.php">
       <line num="31" type="stmt" count="0"/>
       <line num="32" type="stmt" count="0"/>
