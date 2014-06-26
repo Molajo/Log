@@ -21,7 +21,7 @@ use stdClass;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class ExceptionHandlingTest extends \PHPUnit_Framework_TestCase
+class ExceptionhandlingTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Logger Object
@@ -29,17 +29,17 @@ class ExceptionHandlingTest extends \PHPUnit_Framework_TestCase
     protected $logger;
 
     /**
-     * @var ExceptionHandling Object
+     * @var Exceptionhandling Object
      */
     protected $exception_handler;
 
     /**
-     * @covers Molajo\Controller\ExceptionHandling::__construct
-     * @covers Molajo\Controller\ExceptionHandling::handleException
-     * @covers Molajo\Controller\ExceptionHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ExceptionHandling::createLogContextArray
-     * @covers Molajo\Controller\ExceptionHandling::log
-     * @covers Molajo\Controller\ExceptionHandling::displayException
+     * @covers Molajo\Controller\Exceptionhandling::__construct
+     * @covers Molajo\Controller\Exceptionhandling::handleException
+     * @covers Molajo\Controller\Exceptionhandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\Exceptionhandling::createLogContextArray
+     * @covers Molajo\Controller\Exceptionhandling::log
+     * @covers Molajo\Controller\Exceptionhandling::displayException
      */
     protected function setUp()
     {
@@ -53,16 +53,16 @@ class ExceptionHandlingTest extends \PHPUnit_Framework_TestCase
 
         $this->logger = new MockLoggerExceptions($loggers);
 
-        $this->exception_handler = new ExceptionHandling($this->logger);
+        $this->exception_handler = new Exceptionhandling($this->logger);
     }
 
     /**
-     * @covers Molajo\Controller\ExceptionHandling::__construct
-     * @covers Molajo\Controller\ExceptionHandling::handleException
-     * @covers Molajo\Controller\ExceptionHandling::setLogLevelUsingMapping
-     * @covers Molajo\Controller\ExceptionHandling::createLogContextArray
-     * @covers Molajo\Controller\ExceptionHandling::log
-     * @covers Molajo\Controller\ExceptionHandling::displayException
+     * @covers Molajo\Controller\Exceptionhandling::__construct
+     * @covers Molajo\Controller\Exceptionhandling::handleException
+     * @covers Molajo\Controller\Exceptionhandling::setLogLevelUsingMapping
+     * @covers Molajo\Controller\Exceptionhandling::createLogContextArray
+     * @covers Molajo\Controller\Exceptionhandling::log
+     * @covers Molajo\Controller\Exceptionhandling::displayException
      *
      * @expectedException Exception
      */

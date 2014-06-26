@@ -31,7 +31,7 @@ class ExceptionhandlingFactoryMethod extends FactoryMethodBase implements Factor
      */
     public function __construct(array $options = array())
     {
-        $options['product_namespace']        = null; //'Molajo\\Controller\\ExceptionHandling';
+        $options['product_namespace']        = null; //'Molajo\\Controller\\Exceptionhandling';
         $options['store_instance_indicator'] = false;
         $options['product_name']             = basename(__DIR__);
 

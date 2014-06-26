@@ -109,8 +109,8 @@
         <line num="418" type="stmt" count="1"/>
         <metrics loc="420" ncloc="163" classes="1" methods="12" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="56" coveredstatements="51" elements="68" coveredelements="61"/>
       </file>
-      <file name="/Users/amystephen/Sites/Molajo/Molajo/vendor/molajo/log/Controller/ExceptionHandling.php">
-        <class name="ExceptionHandling" namespace="Molajo\Controller">
+      <file name="/Users/amystephen/Sites/Molajo/Molajo/vendor/molajo/log/Controller/Exceptionhandling.php">
+        <class name="Exceptionhandling" namespace="Molajo\Controller">
           <metrics methods="6" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="3" elements="37" coveredelements="4"/>
         </class>
         <line num="100" type="method" name="__construct" crap="2.26" count="1"/>
