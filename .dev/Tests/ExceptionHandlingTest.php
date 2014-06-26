@@ -97,12 +97,9 @@ class ThisIsGoingToHurt
 {
     public function bam()
     {
-        try
-        {
-            $x = 10/0;
-        }
-        catch (Exception $e)
-        {
+        try {
+            $x = 10 / 0;
+        } catch (Exception $e) {
             throw new Exception('now what?');
         }
     }

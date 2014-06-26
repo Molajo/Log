@@ -649,13 +649,13 @@ class ErrorlogTest extends \PHPUnit_Framework_TestCase
      */
     public function testLogWithoutFileLocation()
     {
-        $loggers                                  = array();
-        $logger_request                           = new stdClass();
-        $logger_request->name                     = 'Test1';
-        $logger_request->logger_type              = 'Errorlog';
-        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                  = array();
-        $loggers[]                                = $logger_request;
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'Errorlog';
+        $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context     = array();
+        $loggers[]                   = $logger_request;
 
         $class        = 'Molajo\\Log\\Logger';
         $this->logger = new $class($loggers);
@@ -773,10 +773,10 @@ class ErrorlogTest extends \PHPUnit_Framework_TestCase
         $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
         $logger_request->context                  = array();
         $logger_request->context['file_location'] = __DIR__ . '/php_error2.log';
-        $logger_request->context['columns'] = array('entry_date', 'message', 'formatted_memory');
+        $logger_request->context['columns']       = array('entry_date', 'message', 'formatted_memory');
         $loggers[]                                = $logger_request;
 
-        $class        = 'Molajo\\Log\\Logger';
+        $class  = 'Molajo\\Log\\Logger';
         $logger = new $class($loggers);
 
         $level   = 200;

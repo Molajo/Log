@@ -321,13 +321,13 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoNotMaintainLog()
     {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'File';
-        $logger_request->levels                      = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                     = array();
-        $logger_request->context['maintain_log']     = false;
+        $loggers                                 = array();
+        $logger_request                          = new stdClass();
+        $logger_request->name                    = 'Test1';
+        $logger_request->logger_type             = 'File';
+        $logger_request->levels                  = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context                 = array();
+        $logger_request->context['maintain_log'] = false;
 
         $loggers[]    = $logger_request;
         $class        = 'Molajo\\Log\\Logger';
@@ -388,13 +388,13 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoMaintainLog()
     {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'File';
-        $logger_request->levels                      = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                     = array();
-        $logger_request->context['maintain_log']     = true;
+        $loggers                                 = array();
+        $logger_request                          = new stdClass();
+        $logger_request->name                    = 'Test1';
+        $logger_request->logger_type             = 'File';
+        $logger_request->levels                  = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context                 = array();
+        $logger_request->context['maintain_log'] = true;
 
         $loggers[]    = $logger_request;
         $class        = 'Molajo\\Log\\Logger';
@@ -457,19 +457,19 @@ class LogTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoLogLevel()
     {
-        $loggers                                     = array();
-        $logger_request                              = new stdClass();
-        $logger_request->name                        = 'Test1';
-        $logger_request->logger_type                 = 'File';
-        $logger_request->levels                      = array();
-        $logger_request->context                     = array();
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'File';
+        $logger_request->levels      = array();
+        $logger_request->context     = array();
 
         $loggers[]    = $logger_request;
         $class        = 'Molajo\\Log\\Logger';
         $this->logger = new $class($loggers);
 
-        $message            = 'Hello';
-        $context            = array();
+        $message = 'Hello';
+        $context = array();
 
         $this->logger->info($message);
 

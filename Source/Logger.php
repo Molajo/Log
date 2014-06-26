@@ -28,16 +28,17 @@ class Logger implements LoggerInterface
      * @var    array
      * @since  1.0
      */
-    protected $logger_adapters = array(
-        'callback',
-        'database',
-        'dummy',
-        'echo',
-        'email',
-        'errorlog',
-        'file',
-        'memory'
-    );
+    protected $logger_adapters
+        = array(
+            'callback',
+            'database',
+            'dummy',
+            'echo',
+            'email',
+            'errorlog',
+            'file',
+            'memory'
+        );
 
     /**
      * RFC 5424 syslog protocol Logging levels
@@ -113,8 +114,8 @@ class Logger implements LoggerInterface
     /**
      * Constructor
      *
-     * @param   array  $logger_requests
-     * @param   array  $logger_adapters
+     * @param   array $logger_requests
+     * @param   array $logger_adapters
      *
      * @since   1.0.0
      */
@@ -320,15 +321,15 @@ class Logger implements LoggerInterface
     /**
      * Set Logger Levels
      *
-     * @param   string  $name
-     * @param   array   $levels
+     * @param   string $name
+     * @param   array  $levels
      *
      * @return  array
      * @since   1.0.0
      */
     protected function setLoggerLevels($name, array $levels)
     {
-        $found = false;
+        $found       = false;
         $new_loggers = array();
 
         foreach ($this->levels_by_loggers as $key => $list) {

@@ -43,9 +43,9 @@ class ErrorlogLogger extends AbstractLogger
         $output = addslashes($output);
 
         if ($this->file_location === null) {
-            error_log((string) $output);
+            error_log((string)$output);
         } else {
-            error_log((string) $output, 3, $this->file_location);
+            error_log((string)$output, 3, $this->file_location);
         }
 
         return $this;

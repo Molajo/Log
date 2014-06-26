@@ -73,8 +73,8 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $logger_request->context     = array();
         $loggers[]                   = $logger_request;
 
-        $class                       = 'Molajo\\Log\\Logger';
-        $this->logger                = new $class($loggers);
+        $class        = 'Molajo\\Log\\Logger';
+        $this->logger = new $class($loggers);
 
         return;
     }

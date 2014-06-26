@@ -81,8 +81,8 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTriggerErrorSetLogLevel()
     {
-        $log_level      = 200;
-        $message        = 'Person logged on.';
+        $log_level = 200;
+        $message   = 'Person logged on.';
 
         trigger_error('Person logged on.', E_USER_ERROR);
 
@@ -116,8 +116,8 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
      */
     public function testRespectErrorReportingOff()
     {
-        $log_level      = 200;
-        $message        = 'Person logged on.';
+        $log_level = 200;
+        $message   = 'Person logged on.';
 
         error_reporting(0);
         trigger_error('Person logged on.', E_USER_NOTICE);
@@ -145,7 +145,7 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
      */
     public function testRespectErrorReportingOnMapToLogLevel()
     {
-        $message        = 'Person logged on.';
+        $message = 'Person logged on.';
 
         error_reporting(E_ALL & ~E_NOTICE);
         trigger_error('Person logged on.', E_USER_NOTICE);
@@ -173,7 +173,7 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
      */
     public function testMapWarningToWarning()
     {
-        $message        = 'Bad person logged on.';
+        $message = 'Bad person logged on.';
 
         error_reporting(E_ALL & ~E_NOTICE);
         trigger_error($message, E_USER_WARNING);
@@ -209,8 +209,8 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
      */
     public function testLetPHPHandleLogPassIn0()
     {
-        $log_level      = 0;
-        $message        = 'Person logged on.';
+        $log_level = 0;
+        $message   = 'Person logged on.';
 
         error_reporting(E_ALL & ~E_NOTICE);
         trigger_error($message, E_USER_WARNING);
@@ -240,7 +240,7 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
     {
         error_reporting(E_ALL & ~E_NOTICE);
 
-        $message        = 'Person logged on.';
+        $message = 'Person logged on.';
 
         $loggers                     = array();
         $logger_request              = new stdClass();
@@ -310,7 +310,7 @@ class ErrorhandlingTest extends \PHPUnit_Framework_TestCase
     {
         error_reporting(E_ALL & ~E_NOTICE);
 
-        $message        = 'Person logged on.';
+        $message = 'Person logged on.';
 
         $loggers                     = array();
         $logger_request              = new stdClass();

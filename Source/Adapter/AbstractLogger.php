@@ -52,14 +52,15 @@ abstract class AbstractLogger
      * @var    array
      * @since  1.0
      */
-    protected $columns = array(
-        'entry_date',
-        'level',
-        'level_name',
-        'message',
-        'formatted_time_from_start',
-        'formatted_memory'
-    );
+    protected $columns
+        = array(
+            'entry_date',
+            'level',
+            'level_name',
+            'message',
+            'formatted_time_from_start',
+            'formatted_memory'
+        );
 
     /**
      * Callback
@@ -143,7 +144,7 @@ abstract class AbstractLogger
     public function __construct(
         $context = array()
     ) {
-        $this->timezone = new DateTimeZone(date_default_timezone_get() ? : 'UTC');
+        $this->timezone = new DateTimeZone(date_default_timezone_get() ?: 'UTC');
         $this->processContextArray($context);
         $this->started_time  = $this->getMicrotimeFloat();
         $this->previous_time = $this->getMicrotimeFloat();

@@ -51,7 +51,7 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
     {
         parent::setDependencies(array());
 
-        $this->dependencies['Logger']        = array();
+        $this->dependencies['Logger'] = array();
 
         return $this->dependencies;
     }

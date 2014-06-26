@@ -66,12 +66,12 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $loggers                             = array();
-        $logger_request                      = new stdClass();
-        $logger_request->name                = 'Test1';
-        $logger_request->logger_type         = 'Callback';
-        $logger_request->levels              = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context             = array();
+        $loggers                     = array();
+        $logger_request              = new stdClass();
+        $logger_request->name        = 'Test1';
+        $logger_request->logger_type = 'Callback';
+        $logger_request->levels      = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context     = array();
 
         $logging = function ($log_entry) {
             $this->assertEquals(19, strlen($log_entry->entry_date));

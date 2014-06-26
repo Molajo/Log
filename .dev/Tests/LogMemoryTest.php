@@ -75,8 +75,8 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
         $logger_request->context     = array();
         $loggers[]                   = $logger_request;
 
-        $class                       = 'Molajo\\Log\\Logger';
-        $this->logger                = new $class($loggers);
+        $class        = 'Molajo\\Log\\Logger';
+        $this->logger = new $class($loggers);
 
         return;
     }
@@ -683,6 +683,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
 
         return $this;
     }
+
     /**
      * @covers Molajo\Log\Logger::__construct
      * @covers Molajo\Log\Logger::getLog
