@@ -201,7 +201,7 @@ abstract class AbstractLogger
         }
 
         $this->setLogEntryFields($context);
-
+        $this->logStandardPHPError($context);
         $this->saveLog();
 
         return $this;
@@ -246,6 +246,31 @@ abstract class AbstractLogger
             $this->log_entry->elapsed_time_from_previous - $this->previous_time
         );
         $this->previous_time                         = $current_time;
+
+        return $this;
+    }
+
+    /**
+     * Set Standard PHP File and Line Number Values
+     *
+     * @param   array $context
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function logStandardPHPError($context)
+    {
+        if (isset($context['file'])) {
+            $this->log_entry->file = $context['file'];
+        } else {
+            $this->log_entry->file = '';
+        }
+
+        if (isset($context['line_number'])) {
+            $this->log_entry->line_number = $context['line_number'];
+        } else {
+            $this->log_entry->line_number = 0;
+        }
 
         return $this;
     }

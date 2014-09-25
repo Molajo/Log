@@ -121,9 +121,10 @@ class Logger implements LoggerInterface
      */
     public function __construct(
         array $logger_requests = array(),
-        $logger_adapters = array()
+        array $logger_adapters = array()
     ) {
         $this->startLoggers($logger_requests);
+
         if (count($logger_adapters) > 0) {
             $this->logger_adapters = $logger_adapters;
         }

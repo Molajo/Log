@@ -35,7 +35,7 @@ class LoggerFactoryMethod extends FactoryMethodBase implements FactoryInterface,
     public function __construct(array $options = array())
     {
         $options['product_name']             = basename(__DIR__);
-        $options['store_instance_indicator'] = true;
+        $options['store_instance_indicator'] = false;
         $options['product_namespace']        = 'Molajo\\Log\\Logger';
 
         parent::__construct($options);
@@ -50,17 +50,9 @@ class LoggerFactoryMethod extends FactoryMethodBase implements FactoryInterface,
      */
     public function instantiateClass()
     {
-        $loggers = array();
-
-        $logger_request                           = new stdClass();
-        $logger_request->name                     = 'Full Logging to File';
-        $logger_request->logger_type              = 'File';
-        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
-        $logger_request->context                  = array();
-        $logger_request->context['file_location'] = __DIR__ . '/FileLog.json';
-        $loggers[]                                = $logger_request;
-
-        $class = $this->product_namespace;
+        $loggers   = array();
+        $loggers[] = $this->options['logger_requests'];
+        $class     = $this->product_namespace;
 
         try {
             $this->product_result = new $class($loggers);

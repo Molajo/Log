@@ -13,6 +13,7 @@ use CommonApi\IoC\FactoryBatchInterface;
 use CommonApi\Exception\RuntimeException;
 use Exception;
 use Molajo\IoC\FactoryMethod\Base as FactoryMethodBase;
+use stdClass;
 
 /**
  * Error Handling Factory Method
@@ -33,8 +34,8 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
      */
     public function __construct(array $options = array())
     {
-        $options['product_namespace']        = 'Molajo\\Controller\\Errorhandling';
-        $options['store_instance_indicator'] = true;
+        $options['product_namespace']        = 'Molajo\\Handler\\Error';
+        $options['store_instance_indicator'] = false;
         $options['product_name']             = basename(__DIR__);
 
         parent::__construct($options);
@@ -51,7 +52,18 @@ class ErrorhandlingFactoryMethod extends FactoryMethodBase implements FactoryInt
     {
         parent::setDependencies(array());
 
-        $this->dependencies['Logger'] = array();
+        $options                                  = array();
+        $logger_request                           = new stdClass();
+        $logger_request->name                     = 'Error Logging to File';
+        $logger_request->logger_type              = 'File';
+        $logger_request->levels                   = array(100, 200, 250, 300, 400, 500, 550, 600);
+        $logger_request->context                  = array();
+        $logger_request->context['file_location'] = $this->base_path . '/Sites/2/Logs/FileLog.json';
+
+        $options['logger_requests'] = $logger_request;
+        $options['base_path']       = $this->base_path;
+
+        $this->dependencies['Logger'] = $options;
 
         return $this->dependencies;
     }

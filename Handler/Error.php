@@ -1,12 +1,12 @@
 <?php
 /**
- * Error Handling Controller
+ * Error Handler
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Controller;
+namespace Molajo\Handler;
 
 use CommonApi\Controller\ErrorHandlingInterface;
 use ErrorException;
@@ -30,7 +30,7 @@ use Psr\Log\LoggerInterface;
  * @link       http://us2.php.net/manual/en/function.set-error-handler.php
  *
  * 2. Inject `Logger` that implements Psr\Log\LoggerInterface (ex., `Monolog` or `Molajo Log`)
- *  as the logger_instance for this class
+ *  as the logger for this class
  *
  * @link       https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
  * @link       https://github.com/Seldaek/monolog
@@ -57,7 +57,7 @@ use Psr\Log\LoggerInterface;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Errorhandling implements ErrorHandlingInterface
+class Error implements ErrorHandlingInterface
 {
     /**
      * Logger
@@ -65,7 +65,7 @@ class Errorhandling implements ErrorHandlingInterface
      * @var    object
      * @since  1.0
      */
-    protected $logger_instance = null;
+    protected $logger = null;
 
     /**
      * RFC 5424 syslog protocol Logging levels
@@ -130,16 +130,16 @@ class Errorhandling implements ErrorHandlingInterface
     /**
      * Class Constructor
      *
-     * @param  LoggerInterface $logger_instance    (PSR-3 compliant Logger)
+     * @param  LoggerInterface $logger             (PSR-3 compliant Logger)
      * @param  array           $error_number_array Only to override default error code to log level assignments
      *
      * @since  1.0
      */
     public function __construct(
-        LoggerInterface $logger_instance,
+        LoggerInterface $logger,
         array $error_number_array = array()
     ) {
-        $this->logger_instance = $logger_instance;
+        $this->logger = $logger;
 
         if (count($error_number_array) > 0) {
             $this->error_number_array = $error_number_array;
@@ -380,6 +380,7 @@ class Errorhandling implements ErrorHandlingInterface
 
         $new_context['file']        = $file;
         $new_context['line_number'] = $line_number;
+        $new_context['context']     = $context;
 
         return $new_context;
     }
@@ -396,7 +397,7 @@ class Errorhandling implements ErrorHandlingInterface
      */
     protected function log($level, $message, array $context = array())
     {
-        $this->logger_instance->log($level, $message, $context);
+        $this->logger->log($level, $message, $context);
 
         return $this;
     }

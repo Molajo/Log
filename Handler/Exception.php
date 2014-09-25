@@ -1,14 +1,14 @@
 <?php
 /**
- * Exception Handling Controller
+ * Exception Handler
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Controller;
+namespace Molajo\Handler;
 
-use Exception;
+use Exception as X;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Exceptionhandling
+class Exception
 {
     /**
      * Logger
@@ -27,7 +27,7 @@ class Exceptionhandling
      * @var    object
      * @since  1.0
      */
-    protected $logger_instance = null;
+    protected $logger = null;
 
     /**
      * RFC 5424 syslog protocol Logging levels
@@ -92,16 +92,16 @@ class Exceptionhandling
     /**
      * Class Constructor
      *
-     * @param  LoggerInterface $logger_instance (PSR-3 compliant Logger)
+     * @param  LoggerInterface $logger (PSR-3 compliant Logger)
      * @param  array           $exception_number_array
      *
      * @since  1.0
      */
     public function __construct(
-        LoggerInterface $logger_instance,
+        LoggerInterface $logger,
         array $exception_number_array = array()
     ) {
-        $this->logger_instance = $logger_instance;
+        $this->logger = $logger;
         if (count($exception_number_array) > 0) {
             $this->exception_to_log_level = $exception_number_array;
         }
@@ -114,8 +114,11 @@ class Exceptionhandling
      * @return  boolean|null
      * @since   1.0.0
      */
-    public function handleException(Exception $e)
+    public function handleException(array $options)
     {
+        $e = $options['exception'];
+        unset($options['exception']);
+
         $this->setLogLevelUsingMapping($e->getCode());
 
         if ($this->log_level === 0) {
@@ -154,12 +157,12 @@ class Exceptionhandling
     /**
      * Transfer $file, $line_number and trace to $context array
      *
-     * @param   Exception $e
+     * @param   X $e
      *
      * @return  array
      * @since   1.0.0
      */
-    protected function createLogContextArray(Exception $e)
+    protected function createLogContextArray(X $e)
     {
         $new_context = array();
 
@@ -182,7 +185,7 @@ class Exceptionhandling
      */
     protected function log($level, $message, array $context = array())
     {
-        $this->logger_instance->log($level, $message, $context);
+        $this->logger->log($level, $message, $context);
 
         return $this;
     }
@@ -194,7 +197,7 @@ class Exceptionhandling
      * @return  boolean|null
      * @since   1.0.0
      */
-    public function displayException(Exception $e)
+    public function displayException(X $e)
     {
         echo "Message: " . $e->getMessage() . "\n\n";
         echo "File: " . $e->getFile() . "\n\n";

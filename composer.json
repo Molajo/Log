@@ -2,7 +2,11 @@
     "name": "molajo/log",
     "type": "molajo-package",
     "description": "Molajo Logs: Basic PSR-3 compliant Log Package for PHP applications",
-    "keywords": ["Log", "Molajo", "CommonApi"],
+    "keywords": [
+        "Log",
+        "Molajo",
+        "CommonApi"
+    ],
     "homepage": "http://github.com/Molajo/Log",
     "license": "MIT",
     "authors": [
