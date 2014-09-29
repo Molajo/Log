@@ -28,6 +28,7 @@
     "autoload": {
         "psr-4": {
             "Molajo\\Controller\\": "Controller/",
+            "Molajo\\Handler\\": "Handler/",
             "Molajo\\Log\\": "Source/",
             "Molajo\\Factories\\": "Factories/"
         }
