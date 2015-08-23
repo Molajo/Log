@@ -4,10 +4,11 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Handler;
 
+use CommonApi\Exception\ExceptionHandlerInterface;
 use Exception as X;
 use Psr\Log\LoggerInterface;
 
@@ -16,10 +17,10 @@ use Psr\Log\LoggerInterface;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Exception
+class Exception implements ExceptionHandlerInterface
 {
     /**
      * Logger
@@ -101,15 +102,18 @@ class Exception
         LoggerInterface $logger,
         array $exception_number_array = array()
     ) {
+
         $this->logger = $logger;
+
         if (count($exception_number_array) > 0) {
             $this->exception_to_log_level = $exception_number_array;
         }
     }
 
     /**
-     * Method is called by PHP when assigned as the `set_exception_handler` for the application
+     * Handle PHP Exception
      *
+     * @param   array $options
      *
      * @return  boolean|null
      * @since   1.0.0
@@ -193,16 +197,16 @@ class Exception
     /**
      * Method is called by PHP when assigned as the `set_exception_handler` for the application
      *
+     * @param   Exception $e
      *
      * @return  boolean|null
      * @since   1.0.0
      */
-    public function displayException(X $e)
+    protected function displayException(X $e)
     {
-        echo "Message: " . $e->getMessage() . "\n\n";
-        echo "File: " . $e->getFile() . "\n\n";
-        echo "Line: " . $e->getLine() . "\n\n";
-        echo "Trace: \n" . $e->getTraceAsString() . "\n";
-
+        echo "Message: " . $e->getMessage() . "<br><br>\n\n";
+        echo "File: " . $e->getFile() . "<br><br>\n\n";
+        echo "Line: " . $e->getLine() . "<br><br>\n\n";
+        echo "Trace: \n" . $e->getTraceAsString() . "<br><br>\n";
     }
 }

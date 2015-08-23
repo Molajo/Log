@@ -4,11 +4,11 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Controller;
 
-use CommonApi\Controller\ErrorHandlingInterface;
+use CommonApi\Application\ErrorHandlingInterface;
 use ErrorException;
 use Molajo\Log\Logger;
 use Psr\Log\LoggerInterface;
@@ -19,7 +19,7 @@ use stdClass;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 class ErrorhandlingTest extends \PHPUnit_Framework_TestCase

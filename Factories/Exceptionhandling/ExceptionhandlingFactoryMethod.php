@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Factories\Exceptionhandling;
 
@@ -20,7 +20,7 @@ use stdClass;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
 class ExceptionhandlingFactoryMethod extends FactoryMethodBase implements FactoryInterface, FactoryBatchInterface
@@ -45,7 +45,7 @@ class ExceptionhandlingFactoryMethod extends FactoryMethodBase implements Factor
      * Instantiate a new handler and inject it into the Adapter for the FactoryInterface
      *
      * @return  array
-     * @since   1.0
+     * @since   1.0.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
     public function setDependencies(array $reflection = array())
@@ -59,10 +59,8 @@ class ExceptionhandlingFactoryMethod extends FactoryMethodBase implements Factor
         $logger_request->context                  = array();
         $logger_request->context['file_location'] = $this->base_path . '/Sites/2/Logs/ExceptionLogger.json';
 
-        $options                    = array();
-        $options['logger_requests'] = $logger_request;
-        $options['base_path']       = $this->base_path;
-
+        $options                      = array();
+        $options['logger_requests']   = $logger_request;
         $this->dependencies['Logger'] = $options;
 
         return $this->dependencies;
