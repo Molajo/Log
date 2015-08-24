@@ -18,7 +18,6 @@
     ],
     "require": {
         "psr/log": "dev-master",
-        "commonapi/controller": "dev-master",
         "commonapi/exception": "dev-master"
     },
     "support": {
